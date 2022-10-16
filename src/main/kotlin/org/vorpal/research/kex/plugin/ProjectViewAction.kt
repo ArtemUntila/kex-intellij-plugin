@@ -11,12 +11,8 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.roots.OrderEnumerator
 import com.intellij.openapi.wm.ToolWindowManager
 import com.intellij.task.ProjectTaskManager
+import org.vorpal.research.kex.plugin.util.*
 import java.io.File
-
-import org.vorpal.research.kex.plugin.util.KEX_PATH
-import org.vorpal.research.kex.plugin.util.TITLE
-import org.vorpal.research.kex.plugin.util.getKEXArgsList
-import org.vorpal.research.kex.plugin.util.getPsiFileFQN
 
 class ProjectViewAction : AnAction() {
 
@@ -26,18 +22,19 @@ class ProjectViewAction : AnAction() {
         val output = chooseFolder(project) ?: return  // Avoiding Error in IDE
         val psiFile = e.getData(CommonDataKeys.PSI_FILE) ?: return
         val target = getPsiFileFQN(psiFile)
-        val classpath = getClassPath(project)
+        val classpathList = getClasspathList(project)
 
         val projectTaskManager = ProjectTaskManager.getInstance(e.project)
         // There is an approach to get module dependencies and build it separately, but it is much more complicated (it will also affect the way classpath is obtained)
         val buildResult = projectTaskManager.buildAllModules()
 
         buildResult.onSuccess {
-            launchKex(project, classpath, target, output)
+            println(getDockerKexArgsList(classpathList, output, target))
+            launchKex(project, classpathList, output, target)
         }
     }
 
-    private fun launchKex(project: Project, cp: String, target: String, output:String) {
+    private fun launchKex(project: Project, classpathList: List<String>, output:String, target: String) {
 
         val toolWindow = ToolWindowManager.getInstance(project).getToolWindow(TITLE)!!
         val consoleView = TextConsoleBuilderFactory.getInstance().createBuilder(project).console
@@ -47,17 +44,21 @@ class ProjectViewAction : AnAction() {
         toolWindow.show()
 
         val kexBackgroundTask = KexBackgroundable(project, TITLE)
-        kexBackgroundTask.command = getKEXArgsList(cp, target, output)
+        //kexBackgroundTask.command = getKEXArgsList(cp, target, output)
+        kexBackgroundTask.command = getDockerKexArgsList(classpathList, output, target)
         kexBackgroundTask.directory = File(KEX_PATH)
         kexBackgroundTask.consoleView = consoleView
 
         ProgressManager.getInstance().run(kexBackgroundTask)
     }
 
-    private fun getClassPath(project: Project): String {
+    private fun getClasspath(project: Project): String {
+        return getClasspathList(project).joinToString(System.getProperty("path.separator"))
+    }
+
+    private fun getClasspathList(project: Project): List<String> {
         val classpathList = OrderEnumerator.orderEntries(project).recursively().pathsList.pathList
-        val classpathListWithoutJDK = classpathList.filter { !it.contains("jdk") }  // TODO: Find something more efficient
-        return classpathListWithoutJDK.joinToString(System.getProperty("path.separator"))
+        return classpathList.filter { !it.contains("jdk") }  // TODO: Find something more efficient
     }
 
     private fun chooseFolder(project: Project): String? {
