@@ -8,14 +8,17 @@ fun getDockerKexArgsList(localClasspathList: List<String>, output: String, targe
     val containerClasspathList = localClasspathList.map { it.replace(Regex(".*[/\\\\]"), DEPS) }
     val containerClasspath = containerClasspathList.joinToString(":")
 
-    val dockerArgsList = getDockerArgsList(localClasspathList, containerClasspathList, output)
-    val kexArgsList = getKexArgsList(containerClasspath, target)
+    val kexOutput = getKexOutput()
+    println(kexOutput)
+    val dockerArgsList = getDockerArgsList(localClasspathList, containerClasspathList, kexOutput)
 
-    return dockerArgsList + kexArgsList
+    val kexArgsList = getKexArgsList(containerClasspath, target)
+    val kexOptionsArgsList = getAllOptionsArgsList()
+
+    return dockerArgsList + kexArgsList + kexOptionsArgsList
 }
 
-private fun getDockerArgsList(localClasspathList: List<String>, containerClasspathList: List<String>, output: String): List<String> {
-    //if (localClasspathList.size != containerClassPath.size) throw IllegalArgumentException()
+private fun getDockerArgsList(localClasspathList: List<String>, containerClasspathList: List<String>, kexOutput: String?): List<String> {
     val dockerArgsList = mutableListOf("docker", "run", "--rm")
 
     for (i in localClasspathList.indices) {
@@ -23,8 +26,10 @@ private fun getDockerArgsList(localClasspathList: List<String>, containerClasspa
         dockerArgsList.add("${localClasspathList[i]}:${containerClasspathList[i]}")
     }
 
-    dockerArgsList.add("-v")
-    dockerArgsList.add("$output:$KEX_OUTPUT")
+    if (kexOutput != null) {
+        dockerArgsList.add("-v")
+        dockerArgsList.add("$kexOutput:$KEX_OUTPUT")
+    }
 
     dockerArgsList.add(DOCKER_IMAGE)
 
