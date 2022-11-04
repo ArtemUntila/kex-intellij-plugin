@@ -27,7 +27,7 @@ class ProjectViewAction : AnAction() {
 
         buildResult.onSuccess {
             val dockerKexArgsList = getDockerKexArgsList(classpathList, "", target)
-            Messages.showInfoMessage(project, dockerKexArgsList.joinToString(" "), "Command")
+            Messages.showInfoMessage(project, dockerKexArgsList.joinToString("\n"), "Command")
             launchKex(project, classpathList, "", target)
         }
     }

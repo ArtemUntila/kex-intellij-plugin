@@ -30,7 +30,7 @@ class KexOptionsStateComponent : PersistentStateComponent<KexOptionsStateCompone
         var kexRtVersion: String = "0.0.1",
         var intrinsicsVersion: String = "0.1.0",
         var junitVersion: String = "4.13.2",
-        var outputDir: String = "temp/",
+//        var outputDir: String = "temp/",
         var useJavaRuntime: Boolean = true,
         var useKexRuntime: Boolean = true,
         var printDetailedCoverage: Boolean = true,

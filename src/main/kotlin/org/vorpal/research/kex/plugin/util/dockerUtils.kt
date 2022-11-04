@@ -9,13 +9,11 @@ fun getDockerKexArgsList(localClasspathList: List<String>, output: String, targe
     val containerClasspath = containerClasspathList.joinToString(":")
 
     val kexOutput = getKexOutput()
-    println(kexOutput)
     val dockerArgsList = getDockerArgsList(localClasspathList, containerClasspathList, kexOutput)
 
     val kexArgsList = getKexArgsList(containerClasspath, target)
-    val kexOptionsArgsList = getAllOptionsArgsList()
 
-    return dockerArgsList + kexArgsList + kexOptionsArgsList
+    return dockerArgsList + kexArgsList// + kexOptionsArgsList
 }
 
 private fun getDockerArgsList(localClasspathList: List<String>, containerClasspathList: List<String>, kexOutput: String?): List<String> {
@@ -37,5 +35,7 @@ private fun getDockerArgsList(localClasspathList: List<String>, containerClasspa
 }
 
 private fun getKexArgsList(classpath: String, target: String): List<String> {
-    return listOf("--classpath", classpath, "--target", target, "--output", KEX_OUTPUT)
+    val kexOptionsArgsList = getAllOptionsArgsList()
+    val kexArgsList = listOf("--classpath", classpath, "--target", target, "--output", KEX_OUTPUT)
+    return kexOptionsArgsList + kexArgsList
 }

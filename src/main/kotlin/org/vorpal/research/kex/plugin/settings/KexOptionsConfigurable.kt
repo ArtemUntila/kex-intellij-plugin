@@ -28,9 +28,9 @@ class KexOptionsConfigurable : BoundConfigurable("Kex") {
             row("JUnit version:") {
                 textField().bindText(state::junitVersion)
             }
-            row("Output directory:") {
-                textField().bindText(state::outputDir)
-            }
+//            row("Output directory:") {
+//                textField().bindText(state::outputDir)
+//            }
             row {
                 checkBox("Use Java runtime").bindSelected(state::useJavaRuntime)
             }

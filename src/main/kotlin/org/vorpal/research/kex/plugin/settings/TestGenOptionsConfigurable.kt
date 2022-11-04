@@ -25,8 +25,8 @@ class TestGenOptionsConfigurable : BoundConfigurable("Test Generation") {
                 }
                 buttonsGroup {
                     row("Test case language:") {
-                        radioButton("Kotlin", "kotlin")
                         radioButton("Java", "java")
+                        radioButton("Kotlin", "kotlin")
                     }.enabledIf(cb.selected)
                 }.bind(state::testCaseLanguage)
                 row {
