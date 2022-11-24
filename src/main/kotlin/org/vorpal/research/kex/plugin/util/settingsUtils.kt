@@ -4,33 +4,29 @@ import org.vorpal.research.kex.plugin.settings.*
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 
-fun main() {
-    val list = getOptionsArgsList("kex", KexOptionsStateComponent.instance.state)
-}
+fun getAllOptionArgs() =
+    getKexOptionArgs() + getTestGenOptionArgs() + getConcolicOptionArgs() + getExecutorOptionArgs()
 
-fun getAllOptionsArgsList() =
-    getKexOptionsArgsList() + getTestGenOptionsArgsList() + getConcolicOptionsArgsList() + getExecutorOptionsArgsList()
+fun getKexOptionArgs() = getOptionArgs("kex", KexOptionsStateComponent.instance.state)
 
-fun getKexOptionsArgsList() = getOptionsArgsList("kex", KexOptionsStateComponent.instance.state)
+fun getTestGenOptionArgs() = getOptionArgs("testGen", TestGenOptionsStateComponent.instance.state)
 
-fun getTestGenOptionsArgsList() = getOptionsArgsList("testGen", TestGenOptionsStateComponent.instance.state)
+fun getConcolicOptionArgs() = getOptionArgs("concolic", ConcolicOptionsStateComponent.instance.state)
 
-fun getConcolicOptionsArgsList() = getOptionsArgsList("concolic", ConcolicOptionsStateComponent.instance.state)
-
-fun getExecutorOptionsArgsList() = getOptionsArgsList("executor", ExecutorOptionsStateComponent.instance.state)
+fun getExecutorOptionArgs() = getOptionArgs("executor", ExecutorOptionsStateComponent.instance.state)
 
 fun getKexOutput(): String? {
     val state = KexSettingsStateComponent.instance.state
     return if (state.kexOutput) state.outputDir else null
 }
 
-private fun getOptionsArgsList(section: String, instance: Any): List<String> {
+private fun getOptionArgs(section: String, instance: Any): List<String> {
     val map = getPropertyValueMap(instance)
-    val optionsList = OptionsList(section)
+    val options = OptionList(section)
     for ((option, value) in map) {
-        optionsList.add(option, value)
+        options.add(option, value)
     }
-    return optionsList.list
+    return options.list
 }
 
 private fun getPropertyValueMap(instance: Any): Map<String, Any> {
