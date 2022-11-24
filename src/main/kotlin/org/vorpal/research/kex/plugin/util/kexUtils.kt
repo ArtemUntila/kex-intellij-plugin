@@ -1,11 +1,12 @@
 package org.vorpal.research.kex.plugin.util
 
-const val TITLE = "Kex"
+//const val TITLE = "Kex"
 
 // TODO: Specify local path to kex project folder
 const val KEX_PATH = "S:\\JetBrains\\IntelliJ IDEA\\Projects\\Summer2022\\kex"
 
-fun getKEXArgsList(cp: String, target: String, output:String): List<String> {
+@Deprecated("Use dockerUtils", ReplaceWith("org.vorpal.research.kex.plugin.util.getDockerKexArgsList()"))
+fun getKexArgs(cp: String, target: String, output:String): List<String> {
     return listOf(
         "java",
         "-Xmx8g",

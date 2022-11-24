@@ -1,6 +1,6 @@
 package org.vorpal.research.kex.plugin.util
 
-class OptionsList(private val section: String) {
+class OptionList(private val section: String) {
 
     private val _list = mutableListOf<String>()
 
