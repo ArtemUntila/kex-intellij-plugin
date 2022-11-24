@@ -8,14 +8,15 @@ fun getDockerKexArgsList(localClasspathList: List<String>, output: String, targe
     val containerClasspathList = localClasspathList.map { it.replace(Regex(".*[/\\\\]"), DEPS) }
     val containerClasspath = containerClasspathList.joinToString(":")
 
-    val dockerArgsList = getDockerArgsList(localClasspathList, containerClasspathList, output)
+    val kexOutput = getKexOutput()
+    val dockerArgsList = getDockerArgsList(localClasspathList, containerClasspathList, kexOutput)
+
     val kexArgsList = getKexArgsList(containerClasspath, target)
 
-    return dockerArgsList + kexArgsList
+    return dockerArgsList + kexArgsList// + kexOptionsArgsList
 }
 
-private fun getDockerArgsList(localClasspathList: List<String>, containerClasspathList: List<String>, output: String): List<String> {
-    //if (localClasspathList.size != containerClassPath.size) throw IllegalArgumentException()
+private fun getDockerArgsList(localClasspathList: List<String>, containerClasspathList: List<String>, kexOutput: String?): List<String> {
     val dockerArgsList = mutableListOf("docker", "run", "--rm")
 
     for (i in localClasspathList.indices) {
@@ -23,8 +24,10 @@ private fun getDockerArgsList(localClasspathList: List<String>, containerClasspa
         dockerArgsList.add("${localClasspathList[i]}:${containerClasspathList[i]}")
     }
 
-    dockerArgsList.add("-v")
-    dockerArgsList.add("$output:$KEX_OUTPUT")
+    if (kexOutput != null) {
+        dockerArgsList.add("-v")
+        dockerArgsList.add("$kexOutput:$KEX_OUTPUT")
+    }
 
     dockerArgsList.add(DOCKER_IMAGE)
 
@@ -32,5 +35,7 @@ private fun getDockerArgsList(localClasspathList: List<String>, containerClasspa
 }
 
 private fun getKexArgsList(classpath: String, target: String): List<String> {
-    return listOf("--classpath", classpath, "--target", target, "--output", KEX_OUTPUT)
+    val kexOptionsArgsList = getAllOptionsArgsList()
+    val kexArgsList = listOf("--classpath", classpath, "--target", target, "--output", KEX_OUTPUT)
+    return kexOptionsArgsList + kexArgsList
 }

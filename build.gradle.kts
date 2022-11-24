@@ -44,3 +44,7 @@ tasks {
         token.set(System.getenv("PUBLISH_TOKEN"))
     }
 }
+
+dependencies {
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.20")
+}
