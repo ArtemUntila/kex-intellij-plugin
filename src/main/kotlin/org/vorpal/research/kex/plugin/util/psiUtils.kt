@@ -7,6 +7,7 @@ import org.jetbrains.kotlin.psi.KtFile
 fun getPsiFileFQN(psiFile: PsiFile): String {
     val className = getClassName(psiFile.name)
 
+    // TODO: replace with psiFile.getFqNameByDirectory().asString()
     var packageName = ""
     when (psiFile) {
         is PsiJavaFile -> packageName = psiFile.packageName
@@ -17,6 +18,7 @@ fun getPsiFileFQN(psiFile: PsiFile): String {
     else "$packageName.${className}"
 }
 
+// TODO: find a way to get FQN name for Kotlin file ("main.kt" -> "MainKt")
 fun getClassName(fileName: String): String {
     return fileName.removeSuffix(".java").removeSuffix(".kt")
 }
