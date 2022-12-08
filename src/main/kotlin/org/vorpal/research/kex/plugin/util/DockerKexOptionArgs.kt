@@ -9,7 +9,8 @@ class DockerKexOptionArgs(
         get() = getDockerKexOptionArgs()
 
     private fun getDockerKexOptionArgs(): List<String> {
-        val containerClasspathList = localClasspathList.map { it.replace(Regex(".*[/\\\\]"), DEPS) }
+        val containerClasspathList = localClasspathList.map { localToContainerPath(it) }
+
         val containerClasspath = containerClasspathList.joinToString(":")
 
         val localOutput = SettingsReader.getKexOutput()
@@ -19,5 +20,10 @@ class DockerKexOptionArgs(
         val optionArgs = OptionArgs()
 
         return dockerArgs.list + kexArgs.list + optionArgs.list
+    }
+
+    private fun localToContainerPath(localPath: String): String {
+        val list = localPath.split(System.getProperty("file.separator")).takeLast(3)
+        return "$DEPS/" + list.joinToString("/")
     }
 }

@@ -2,14 +2,12 @@ package org.vorpal.research.kex.plugin
 
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
-import com.intellij.openapi.actionSystem.DataKey
 import com.intellij.openapi.actionSystem.DefaultActionGroup
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiMethod
 import org.jetbrains.kotlin.psi.KtClass
 import org.jetbrains.kotlin.psi.KtFunction
-import org.jetbrains.kotlin.psi.KtNamedFunction
 
 class EditorActionGroup : DefaultActionGroup() {
 
@@ -26,9 +24,11 @@ class EditorActionGroup : DefaultActionGroup() {
 
         val psiFile = e.getData(CommonDataKeys.PSI_FILE) ?: return
         val editor = e.getData(CommonDataKeys.EDITOR) ?: return
-        val psiElement = psiFile.viewProvider.findElementAt(editor.caretModel.offset)
+        val psiElement = psiFile.viewProvider.findElementAt(editor.caretModel.offset)?.parent
         if (psiElement != null) {
-            e.presentation.isEnabledAndVisible = true
+            val isJavaElement = psiElement is PsiClass || psiElement is PsiMethod
+            val isKotlinElement = psiElement is KtClass || psiElement is KtFunction
+            e.presentation.isEnabledAndVisible = isJavaElement || isKotlinElement
             EditorActionGroup.psiElement = psiElement
         }
     }
