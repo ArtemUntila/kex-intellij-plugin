@@ -63,11 +63,20 @@
 
     <actions>
         <!--TODO: Custom Icon (https://www.flaticon.com/free-icon/muffin_7808702?related_id=7808702&origin=tag)-->
-        <group id="Kex" class="org.vorpal.research.kex.plugin.KexActionGroup" text="Kex" popup="true"
+        <group id="KexActionGroup" class="org.vorpal.research.kex.plugin.KexActionGroup" text="Kex" popup="true"
                icon="/icons/kex_16.svg">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
             <action class="org.vorpal.research.kex.plugin.ProjectViewAction"
                     id="Kex.Actions.ProjectViewAction"
+                    text="Generate Tests"
+            />
+        </group>
+
+        <group id="EditorActionGroup" class="org.vorpal.research.kex.plugin.EditorActionGroup" text="Kex" popup="true"
+               icon="/icons/kex_16.svg">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+            <action class="org.vorpal.research.kex.plugin.EditorAction"
+                    id="Kex.Actions.EditorAction"
                     text="Generate Tests"
             />
         </group>
