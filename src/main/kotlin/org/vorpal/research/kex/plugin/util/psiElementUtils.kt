@@ -3,13 +3,13 @@ package org.vorpal.research.kex.plugin.util
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiMethod
-import org.jetbrains.kotlin.idea.base.utils.fqname.fqName
+import com.intellij.psi.PsiType
 import org.jetbrains.kotlin.idea.util.toJvmFqName
 import org.jetbrains.kotlin.name.FqName
-import org.jetbrains.kotlin.nj2k.postProcessing.type
 import org.jetbrains.kotlin.psi.KtClass
 import org.jetbrains.kotlin.psi.KtFunction
-import org.jetbrains.kotlin.psi.psiUtil.containingClass
+import org.jetbrains.uast.getAsJavaPsiElement
+import org.jetbrains.uast.toUElement
 
 val PsiElement.targetName: String?
     get() = when (this) {
@@ -23,20 +23,26 @@ val PsiElement.targetName: String?
 val PsiClass.fqName: FqName?
     get() = qualifiedName?.let { FqName(it) }
 
+val PsiType.fqName: FqName
+    get() = FqName(canonicalText)
+
 val PsiMethod.targetName: String
     get() {
         val className = containingClass?.fqName?.toJvmFqName
-        val returnTypeName = returnType?.canonicalText
-        val parameterTypeNames = parameterList.parameters.joinToString(",") { it.type.canonicalText }
+        val returnTypeName = returnType?.fqName?.toJvmFqName
+        val parameterTypeNames = parameterList.parameters.joinToString(",") { it.type.fqName.toJvmFqName }
         return formatFunTargetName(className!!, name, returnTypeName!!, parameterTypeNames)
     }
 
 val KtFunction.targetName: String
     get() {
-        val parentName = containingClass()?.fqName?.toJvmFqName ?: containingFile.fileClassFqName?.asString()
-        val returnTypeName = type()?.fqName?.asString()
-        val parameterTypeNames = valueParameters.map { it.type()?.fqName?.asString() }.joinToString(",")
-        return formatFunTargetName(parentName!!, name!!, returnTypeName!!, parameterTypeNames)
+//        val parentName = containingClass()?.fqName?.toJvmFqName ?: containingFile.fileClassFqName?.asString()
+//        val returnTypeName = type()?.fqName?.asString()
+//        val parameterTypeNames = valueParameters.map { it.type()?.fqName?.asString() }.joinToString(",")
+//        return formatFunTargetName(parentName!!, name!!, returnTypeName!!, parameterTypeNames)
+        // Kt Element -> UAST Element -> Java Psi Element
+        val psiMethod = toUElement()?.getAsJavaPsiElement(PsiMethod::class.java) as PsiMethod
+        return psiMethod.targetName
     }
 
 private fun formatFunTargetName(
