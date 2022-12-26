@@ -13,7 +13,7 @@ class DockerArgs(
         get() = getDockerArgs()
 
     private fun getDockerArgs(): List<String> {
-        val dockerArgs = mutableListOf("docker", "run", "--rm")
+        val dockerArgs = mutableListOf("docker", "run", "--rm", "--name", "123")
 
         // Bind dependencies
         for (i in localClasspathList.indices) {

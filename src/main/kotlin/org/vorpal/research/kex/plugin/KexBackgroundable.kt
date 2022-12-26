@@ -1,31 +1,48 @@
 package org.vorpal.research.kex.plugin
 
+import com.intellij.execution.configurations.GeneralCommandLine
 import com.intellij.execution.process.OSProcessHandler
 import com.intellij.execution.ui.ConsoleView
+import com.intellij.openapi.progress.ProcessCanceledException
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.Task.Backgroundable
 import com.intellij.openapi.project.Project
+import kotlin.concurrent.thread
 
-class KexBackgroundable(project: Project, title: String) : Backgroundable(project, title) {
+class KexBackgroundable(project: Project, title: String,
+                        private val command: List<String>,
+                        private val consoleView: ConsoleView) : Backgroundable(project, title) {
 
-    var command: List<String>? = null
-    var consoleView: ConsoleView? = null
+//    var command: List<String>? = null
+//    var consoleView: ConsoleView? = null
 
     override fun run(indicator: ProgressIndicator) {
-        val processBuilder = ProcessBuilder(command)  // Separate Const/companion?
-        val process = processBuilder.start()
-        val processHandler = OSProcessHandler(process, null)
+        listenCanceled(indicator)
+
+        val processHandler = OSProcessHandler(GeneralCommandLine(command))
         processHandler.startNotify()
-        try {
-            consoleView?.attachToProcess(processHandler)
-            process.waitFor()
-        } catch (npe: NullPointerException) {
-            process.destroy()
+        consoleView.attachToProcess(processHandler)
+        processHandler.waitFor()
+    }
+
+    private fun listenCanceled(indicator: ProgressIndicator) {
+        // Checks if "Cancel" button has been pressed (once a second)
+        thread(true) {
+            while (indicator.isRunning) {
+                try {
+                    indicator.checkCanceled()
+                    println("checkCanceled")
+                } catch (pce: ProcessCanceledException) {
+                    ProcessBuilder("docker", "kill", "123").start().waitFor()
+                }
+                Thread.sleep(1000)
+            }
+            println("Thread finished")
         }
     }
 
-    // TODO: Destroy Process (process.destroy doesn't seem to work)
     override fun onCancel() {
+        println("Cancel")
         super.onCancel()
     }
 
