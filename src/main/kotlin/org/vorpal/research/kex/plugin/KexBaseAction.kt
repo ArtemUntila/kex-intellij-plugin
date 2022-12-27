@@ -43,8 +43,8 @@ abstract class KexBaseAction : AnAction() {
         toolWindow.contentManager.addContent(content)
         toolWindow.show()
 
-        val command = dockerKexOptionArgs.list
-        val kexBackgroundTask = KexBackgroundable(project, TITLE, command, consoleView)
+        //val command = dockerKexOptionArgs.list
+        val kexBackgroundTask = KexBackgroundable(project, TITLE, dockerKexOptionArgs, consoleView)
 
         ProgressManager.getInstance().run(kexBackgroundTask)
     }
