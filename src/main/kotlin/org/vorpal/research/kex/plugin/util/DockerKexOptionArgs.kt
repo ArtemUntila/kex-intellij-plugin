@@ -5,21 +5,55 @@ class DockerKexOptionArgs(
     private val target: String,
     private val testDir: String
     ) : Args {
+
+    private companion object {
+        var id = 0
+    }
+
+    private val containerClasspathList: List<String>
+    val containerName: String
+
+    init {
+        id++
+        containerClasspathList = localClasspathList.map { localToContainerPath(it) }
+        containerName = "$DOCKER_IMAGE-$id"
+    }
+
     override val list: List<String>
         get() = getDockerKexOptionArgs()
 
     private fun getDockerKexOptionArgs(): List<String> {
-        val containerClasspathList = localClasspathList.map { localToContainerPath(it) }
+        // Docker args
+        val bindList = getBinds()
+        val dockerArgs = DockerArgs(DOCKER_IMAGE, bindList, containerName)
 
+        // Kex args
         val containerClasspath = containerClasspathList.joinToString(":")
-
-        val localOutput = SettingsReader.getKexOutput()
-
-        val dockerArgs = DockerArgs(DOCKER_IMAGE, localClasspathList, containerClasspathList, localOutput, KEX_OUTPUT, testDir)
         val kexArgs = KexArgs(containerClasspath, target, KEX_OUTPUT)
+
+        // Kex options
         val optionArgs = OptionArgs()
 
         return dockerArgs.list + kexArgs.list + optionArgs.list
+    }
+
+    private fun getBinds(): BindList {
+        val bindList = BindList()
+
+        // Bind dependencies
+        for (i in localClasspathList.indices) {
+            bindList.addBind(localClasspathList[i], containerClasspathList[i])
+        }
+
+        // Bind output
+        SettingsReader.getKexOutput()?.let {
+            bindList.addBind(it, KEX_OUTPUT)
+        }
+
+        // Bind test directory
+        bindList.addBind(testDir, "$KEX_OUTPUT/tests")
+
+        return bindList
     }
 
     private fun localToContainerPath(localPath: String): String {
