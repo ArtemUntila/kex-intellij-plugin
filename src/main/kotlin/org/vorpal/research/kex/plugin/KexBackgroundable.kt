@@ -32,10 +32,10 @@ class KexBackgroundable(project: Project, title: String,
                 try {
                     indicator.checkCanceled()
                     println("checkCanceled")
+                    Thread.sleep(1000)
                 } catch (pce: ProcessCanceledException) {
                     ProcessBuilder("docker", "kill", "123").start().waitFor()
                 }
-                Thread.sleep(1000)
             }
             println("Thread finished")
         }
