@@ -1,6 +1,8 @@
-package org.vorpal.research.kex.plugin.util
+package org.vorpal.research.kex.plugin.args
 
-class DockerArgs(
+import org.vorpal.research.kex.plugin.util.BindList
+
+class DockerRunArgs(
     private val dockerImage: String,
     private val bindList: BindList,
     private val containerName: String

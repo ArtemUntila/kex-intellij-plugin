@@ -1,14 +1,12 @@
 package org.vorpal.research.kex.plugin.util
 
-class OptionList(private val section: String) {
+class OptionList(private val section: String) : PrefixList() {
 
-    private val _list = mutableListOf<String>()
+    override val prefix = "--option"
 
-    val list: List<String>
-        get() = _list
-
-    fun add(option: String, value: Any) {
-        _list.add("--option")
-        _list.add("$section:$option:$value")
+    fun addOption(optionName: String, value: Any) {
+        val option = "$section:$optionName:$value"
+        addPrefix()
+        add(option)
     }
 }

@@ -1,4 +1,4 @@
-package org.vorpal.research.kex.plugin.util
+package org.vorpal.research.kex.plugin.util.psi
 
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiJavaFile
@@ -7,19 +7,6 @@ import org.jetbrains.kotlin.idea.KotlinIconProviderBase
 import org.jetbrains.kotlin.idea.core.getFqNameByDirectory
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.psi.KtFile
-
-//fun getPsiFileFQN(psiFile: PsiFile): String {
-//    val className = getClassName(psiFile.name)
-//
-//    var packageName = ""
-//    when (psiFile) {
-//        is PsiJavaFile -> packageName = psiFile.packageName
-//        is KtFile -> packageName = psiFile.packageName
-//    }
-//
-//    return if (packageName.isEmpty()) className
-//    else "$packageName.${className}"
-//}
 
 val PsiFile.fileClassFqName: FqName?
     get() = when (this) {

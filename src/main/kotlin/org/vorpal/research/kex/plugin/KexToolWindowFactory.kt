@@ -9,6 +9,5 @@ import com.intellij.openapi.wm.ToolWindowFactory
 class KexToolWindowFactory : ToolWindowFactory, DumbAware {
 
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
-        // TODO("Nothing to implement yet")
     }
 }

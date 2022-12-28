@@ -1,6 +1,7 @@
-package org.vorpal.research.kex.plugin.util
+package org.vorpal.research.kex.plugin.settings.reader
 
 import org.vorpal.research.kex.plugin.settings.*
+import org.vorpal.research.kex.plugin.util.OptionList
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 
@@ -22,9 +23,9 @@ object SettingsReader {
         val map = getPropertyValueMap(instance)
         val options = OptionList(section)
         for ((option, value) in map) {
-            options.add(option, value)
+            options.addOption(option, value)
         }
-        return options.list
+        return options
     }
 
     private fun getPropertyValueMap(instance: Any): Map<String, Any> {

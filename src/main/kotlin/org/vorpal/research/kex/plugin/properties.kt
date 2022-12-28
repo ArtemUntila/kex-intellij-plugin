@@ -1,4 +1,4 @@
-package org.vorpal.research.kex.plugin.util
+package org.vorpal.research.kex.plugin
 
 const val TITLE = "Kex"
 const val DEPS = "/home/deps"
