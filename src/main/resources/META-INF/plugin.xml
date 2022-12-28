@@ -63,7 +63,7 @@
 
     <actions>
         <!--TODO: Custom Icon (https://www.flaticon.com/free-icon/muffin_7808702?related_id=7808702&origin=tag)-->
-        <group id="KexActionGroup" class="org.vorpal.research.kex.plugin.KexActionGroup" text="Kex" popup="true"
+        <group id="ProjectViewActionGroup" class="org.vorpal.research.kex.plugin.ProjectViewActionGroup" text="Kex" popup="true"
                icon="/icons/kex_16.svg">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
             <action class="org.vorpal.research.kex.plugin.ProjectViewAction"

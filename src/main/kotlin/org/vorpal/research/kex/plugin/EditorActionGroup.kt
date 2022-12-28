@@ -16,12 +16,6 @@ class EditorActionGroup : DefaultActionGroup() {
     }
 
     override fun update(e: AnActionEvent) {
-//        val psiElement = e.getData(CommonDataKeys.PSI_ELEMENT)
-//        val isJavaElement = psiElement is PsiClass || psiElement is PsiMethod
-//        val isKotlinElement = psiElement is KtClass || (psiElement is KtNamedFunction && psiElement.funKeyword != null)
-//        val isClass = psiElement is PsiClass || psiElement is KtClass
-//        e.presentation.isEnabledAndVisible = (psiElement != null)// && isClass//(isJavaElement || isKotlinElement)
-
         val psiFile = e.getData(CommonDataKeys.PSI_FILE) ?: return
         val editor = e.getData(CommonDataKeys.EDITOR) ?: return
         val psiElement = psiFile.viewProvider.findElementAt(editor.caretModel.offset)?.parent

@@ -1,6 +1,12 @@
-package org.vorpal.research.kex.plugin.util
+package org.vorpal.research.kex.plugin.args
 
-class DockerKexOptionArgs(
+import org.vorpal.research.kex.plugin.DEPS
+import org.vorpal.research.kex.plugin.DOCKER_IMAGE
+import org.vorpal.research.kex.plugin.KEX_OUTPUT
+import org.vorpal.research.kex.plugin.settings.reader.SettingsReader
+import org.vorpal.research.kex.plugin.util.*
+
+class DockerKexArgs(
     private val localClasspathList: List<String>,
     private val target: String,
     private val testDir: String
@@ -25,16 +31,13 @@ class DockerKexOptionArgs(
     private fun getDockerKexOptionArgs(): List<String> {
         // Docker args
         val bindList = getBinds()
-        val dockerArgs = DockerArgs(DOCKER_IMAGE, bindList, containerName)
+        val dockerRunArgs = DockerRunArgs(DOCKER_IMAGE, bindList, containerName)
 
-        // Kex args
+        // Kex args (main args + options)
         val containerClasspath = containerClasspathList.joinToString(":")
         val kexArgs = KexArgs(containerClasspath, target, KEX_OUTPUT)
 
-        // Kex options
-        val optionArgs = OptionArgs()
-
-        return dockerArgs.list + kexArgs.list + optionArgs.list
+        return dockerRunArgs.list + kexArgs.list
     }
 
     private fun getBinds(): BindList {
