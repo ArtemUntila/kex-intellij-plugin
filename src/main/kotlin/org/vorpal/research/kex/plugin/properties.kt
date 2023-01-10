@@ -1,6 +1,6 @@
 package org.vorpal.research.kex.plugin
 
 const val TITLE = "Kex"
-const val DEPS = "/home/deps"
+const val DEPS = "/deps"
 const val DOCKER_IMAGE = "arch-kex"
-const val KEX_OUTPUT = "/home/kex-output"
+const val KEX_OUTPUT = "/kex-output"
