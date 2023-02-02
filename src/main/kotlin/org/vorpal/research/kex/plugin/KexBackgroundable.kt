@@ -19,8 +19,8 @@ class KexBackgroundable(project: Project, title: String,
         listenCanceled(indicator)
 
         val processHandler = OSProcessHandler(GeneralCommandLine(dockerKexArgs.list))
-        processHandler.startNotify()
         consoleView.attachToProcess(processHandler)
+        processHandler.startNotify()
         processHandler.waitFor()
     }
 
