@@ -21,6 +21,8 @@ abstract class KexBaseAction : AnAction() {
         val buildResult = projectTaskManager.build(module)
 
         buildResult.onSuccess {
+            if (it.hasErrors()) return@onSuccess
+
             val classpathList = getModuleClasspathList(module)
             val testDirPath = getModuleTestDirPath(module)
 

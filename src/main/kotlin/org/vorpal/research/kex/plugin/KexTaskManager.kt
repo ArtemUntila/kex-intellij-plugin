@@ -14,7 +14,7 @@ class KexTaskManager(private val project: Project) {
     fun showConsole() {
         val content = toolWindow.contentManager.factory.createContent(consoleView.component, "$TITLE Output", true)
         content.isCloseable = true
-        toolWindow.contentManager.addContent(content)
+        toolWindow.contentManager.addContent(content, 0)
         toolWindow.show()
     }
 
