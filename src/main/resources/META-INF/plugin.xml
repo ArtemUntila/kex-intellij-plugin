@@ -31,34 +31,34 @@
                     canCloseContents="true"
         />
         <applicationConfigurable parentId="tools"
-                                 instance="org.vorpal.research.kex.plugin.settings.KexSettingsConfigurable"
-                                 id="org.vorpal.research.kex.plugin.settings.KexSettingsConfigurable"
+                                 instance="org.vorpal.research.kex.plugin.settings.view.KexSettingsConfigurable"
+                                 id="org.vorpal.research.kex.plugin.settings.view.KexSettingsConfigurable"
                                  displayName="Kex"/>
-        <applicationService serviceImplementation="org.vorpal.research.kex.plugin.settings.KexSettingsStateComponent"/>
+        <applicationService serviceImplementation="org.vorpal.research.kex.plugin.settings.state.KexSettingsStateComponent"/>
 
-        <applicationConfigurable parentId="org.vorpal.research.kex.plugin.settings.KexSettingsConfigurable"
-                                 instance="org.vorpal.research.kex.plugin.settings.KexOptionsConfigurable"
-                                 id="org.vorpal.research.kex.plugin.settings.KexOptionsConfigurable"
+        <applicationConfigurable parentId="org.vorpal.research.kex.plugin.settings.view.KexSettingsConfigurable"
+                                 instance="org.vorpal.research.kex.plugin.settings.view.KexOptionsConfigurable"
+                                 id="org.vorpal.research.kex.plugin.settings.view.KexOptionsConfigurable"
                                  displayName="Kex"/>
-        <applicationService serviceImplementation="org.vorpal.research.kex.plugin.settings.KexOptionsStateComponent"/>
+        <applicationService serviceImplementation="org.vorpal.research.kex.plugin.settings.state.KexOptionsStateComponent"/>
 
-        <applicationConfigurable parentId="org.vorpal.research.kex.plugin.settings.KexSettingsConfigurable"
-                                 instance="org.vorpal.research.kex.plugin.settings.TestGenOptionsConfigurable"
-                                 id="org.vorpal.research.kex.plugin.settings.TestGenOptionsConfigurable"
+        <applicationConfigurable parentId="org.vorpal.research.kex.plugin.settings.view.KexSettingsConfigurable"
+                                 instance="org.vorpal.research.kex.plugin.settings.view.TestGenOptionsConfigurable"
+                                 id="org.vorpal.research.kex.plugin.settings.view.TestGenOptionsConfigurable"
                                  displayName="Test Generation"/>
-        <applicationService serviceImplementation="org.vorpal.research.kex.plugin.settings.TestGenOptionsStateComponent"/>
+        <applicationService serviceImplementation="org.vorpal.research.kex.plugin.settings.state.TestGenOptionsStateComponent"/>
 
-        <applicationConfigurable parentId="org.vorpal.research.kex.plugin.settings.KexSettingsConfigurable"
-                                 instance="org.vorpal.research.kex.plugin.settings.ConcolicOptionsConfigurable"
-                                 id="org.vorpal.research.kex.plugin.settings.ConcolicOptionsConfigurable"
+        <applicationConfigurable parentId="org.vorpal.research.kex.plugin.settings.view.KexSettingsConfigurable"
+                                 instance="org.vorpal.research.kex.plugin.settings.view.ConcolicOptionsConfigurable"
+                                 id="org.vorpal.research.kex.plugin.settings.view.ConcolicOptionsConfigurable"
                                  displayName="Concolic"/>
-        <applicationService serviceImplementation="org.vorpal.research.kex.plugin.settings.ConcolicOptionsStateComponent"/>
+        <applicationService serviceImplementation="org.vorpal.research.kex.plugin.settings.state.ConcolicOptionsStateComponent"/>
 
-        <applicationConfigurable parentId="org.vorpal.research.kex.plugin.settings.KexSettingsConfigurable"
-                                 instance="org.vorpal.research.kex.plugin.settings.ExecutorOptionsConfigurable"
-                                 id="org.vorpal.research.kex.plugin.settings.ExecutorOptionsConfigurable"
+        <applicationConfigurable parentId="org.vorpal.research.kex.plugin.settings.view.KexSettingsConfigurable"
+                                 instance="org.vorpal.research.kex.plugin.settings.view.ExecutorOptionsConfigurable"
+                                 id="org.vorpal.research.kex.plugin.settings.view.ExecutorOptionsConfigurable"
                                  displayName="Executor"/>
-        <applicationService serviceImplementation="org.vorpal.research.kex.plugin.settings.ExecutorOptionsStateComponent"/>
+        <applicationService serviceImplementation="org.vorpal.research.kex.plugin.settings.state.ExecutorOptionsStateComponent"/>
     </extensions>
 
     <actions>

@@ -1,6 +1,6 @@
 package org.vorpal.research.kex.plugin.settings.reader
 
-import org.vorpal.research.kex.plugin.settings.*
+import org.vorpal.research.kex.plugin.settings.state.*
 import org.vorpal.research.kex.plugin.util.OptionList
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties

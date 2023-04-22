@@ -1,8 +1,9 @@
-package org.vorpal.research.kex.plugin.settings
+package org.vorpal.research.kex.plugin.settings.view
 
 import com.intellij.openapi.options.BoundConfigurable
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.ui.dsl.builder.*
+import org.vorpal.research.kex.plugin.settings.state.ExecutorOptionsStateComponent
 
 class ExecutorOptionsConfigurable : BoundConfigurable("Executor") {
 
