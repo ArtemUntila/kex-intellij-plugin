@@ -32,7 +32,3 @@ private fun PsiFile.fileClassFqName(extensionSuffix: String): FqName {
     return if (packageName.isEmpty()) FqName(className)
     else FqName("$packageName.$className")
 }
-
-//fun getClassName(fileName: String): String {
-//    return fileName.removeSuffix(".java").removeSuffix(".kt")
-//}

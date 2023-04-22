@@ -4,6 +4,7 @@ import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiMethod
 import com.intellij.psi.PsiType
+import com.intellij.psi.util.elementType
 import org.jetbrains.kotlin.idea.util.toJvmFqName
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.psi.KtClass
@@ -26,23 +27,19 @@ val PsiClass.fqName: FqName?
 val PsiType.fqName: FqName
     get() = FqName(canonicalText)
 
-val PsiMethod.targetName: String
+val PsiMethod.targetName: String?
     get() {
-        val className = containingClass?.fqName?.toJvmFqName
-        val returnTypeName = returnType?.fqName?.toJvmFqName
+        val className = containingClass?.fqName?.toJvmFqName ?: return null
+        val returnTypeName = returnType?.fqName?.toJvmFqName ?: return null
         val parameterTypeNames = parameterList.parameters.joinToString(",") { it.type.fqName.toJvmFqName }
-        return formatFunTargetName(className!!, name, returnTypeName!!, parameterTypeNames)
+        return formatFunTargetName(className, name, returnTypeName, parameterTypeNames)
     }
 
-val KtFunction.targetName: String
+val KtFunction.targetName: String?
     get() {
-//        val parentName = containingClass()?.fqName?.toJvmFqName ?: containingFile.fileClassFqName?.asString()
-//        val returnTypeName = type()?.fqName?.asString()
-//        val parameterTypeNames = valueParameters.map { it.type()?.fqName?.asString() }.joinToString(",")
-//        return formatFunTargetName(parentName!!, name!!, returnTypeName!!, parameterTypeNames)
         // Kt Element -> UAST Element -> Java Psi Element
-        val psiMethod = toUElement()?.getAsJavaPsiElement(PsiMethod::class.java) as PsiMethod
-        return psiMethod.targetName
+        val psiMethod = toUElement().getAsJavaPsiElement(PsiMethod::class.java)
+        return psiMethod?.targetName
     }
 
 private fun formatFunTargetName(
@@ -51,3 +48,13 @@ private fun formatFunTargetName(
     returnTypeName: String,
     parameterTypeNames: String
 ): String = "$className::$funName($parameterTypeNames):$returnTypeName"
+
+// Couldn't come up with something more elegant (working both for java and kotlin)
+val PsiElement.isIdentifier: Boolean
+    get() = elementType.toString() == "IDENTIFIER"
+
+val PsiElement.isJavaOrKotlinClass: Boolean
+    get() = this is PsiClass || this is KtClass
+
+val PsiElement.isJavaOrKotlinMethod: Boolean
+    get() = this is PsiMethod || this is KtFunction
