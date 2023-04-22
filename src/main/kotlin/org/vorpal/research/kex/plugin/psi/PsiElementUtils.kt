@@ -1,4 +1,4 @@
-package org.vorpal.research.kex.plugin.util.psi
+package org.vorpal.research.kex.plugin.psi
 
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiElement

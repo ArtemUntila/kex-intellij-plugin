@@ -1,4 +1,4 @@
-package org.vorpal.research.kex.plugin
+package org.vorpal.research.kex.plugin.actions
 
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.module.Module
@@ -12,6 +12,7 @@ import org.jetbrains.jps.model.java.JavaSourceRootType
 import org.jetbrains.kotlin.idea.configuration.isGradleModule
 import org.jetbrains.kotlin.idea.maven.isMavenModule
 import org.jetbrains.kotlin.idea.util.findModule
+import org.vorpal.research.kex.plugin.KexTaskManager
 import org.vorpal.research.kex.plugin.args.DockerKexArgs
 
 abstract class KexBaseAction : AnAction() {
