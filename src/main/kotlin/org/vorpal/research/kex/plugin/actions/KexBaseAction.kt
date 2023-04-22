@@ -6,14 +6,13 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.guessModuleDir
 import com.intellij.openapi.project.rootManager
 import com.intellij.openapi.roots.OrderEnumerator
-import com.intellij.openapi.ui.Messages
 import com.intellij.task.ProjectTaskManager
 import org.jetbrains.jps.model.java.JavaSourceRootType
 import org.jetbrains.kotlin.idea.configuration.isGradleModule
 import org.jetbrains.kotlin.idea.maven.isMavenModule
 import org.jetbrains.kotlin.idea.util.findModule
 import org.vorpal.research.kex.plugin.KexTaskManager
-import org.vorpal.research.kex.plugin.args.DockerKexArgs
+import org.vorpal.research.kex.plugin.command.dockerRunKexCommand
 
 abstract class KexBaseAction : AnAction() {
 
@@ -27,15 +26,11 @@ abstract class KexBaseAction : AnAction() {
             val classpathList = getModuleClasspathList(module)
             val testDirPath = getModuleTestDirPath(module)
 
-            val dockerKexArgs = DockerKexArgs(classpathList, target, testDirPath)
-
-            Messages.showInfoMessage(project, target, "Target")
-            Messages.showInfoMessage(project, testDirPath, "Test Dir")
-            Messages.showInfoMessage(project, "${dockerKexArgs.list}", "Docker Kex Args")
+            val dockerRunKexCommand = dockerRunKexCommand(classpathList, target, testDirPath)
 
             val kexTaskManager = KexTaskManager(project)
             kexTaskManager.showConsole()
-            kexTaskManager.run(dockerKexArgs)
+            kexTaskManager.run(dockerRunKexCommand)
         }
     }
 

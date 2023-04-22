@@ -7,18 +7,18 @@ import com.intellij.openapi.progress.ProcessCanceledException
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.Task.Backgroundable
 import com.intellij.openapi.project.Project
-import org.vorpal.research.kex.plugin.args.DockerKexArgs
-import org.vorpal.research.kex.plugin.args.DockerKillArgs
+import org.vorpal.research.kex.plugin.command.DockerKillCommand
+import org.vorpal.research.kex.plugin.command.DockerRunCommand
 import kotlin.concurrent.thread
 
 class KexBackgroundable(project: Project, title: String,
-                        private val dockerKexArgs: DockerKexArgs,
+                        private val dockerRunCommand: DockerRunCommand,
                         private val consoleView: ConsoleView) : Backgroundable(project, title) {
 
     override fun run(indicator: ProgressIndicator) {
         listenCanceled(indicator)
 
-        val processHandler = OSProcessHandler(GeneralCommandLine(dockerKexArgs.list))
+        val processHandler = OSProcessHandler(GeneralCommandLine(dockerRunCommand.args()))
         consoleView.attachToProcess(processHandler)
         processHandler.startNotify()
         processHandler.waitFor()
@@ -33,8 +33,8 @@ class KexBackgroundable(project: Project, title: String,
                     println("checkCanceled")
                     Thread.sleep(1000)
                 } catch (pce: ProcessCanceledException) {
-                    val dockerKillArgs = DockerKillArgs(dockerKexArgs.containerName)
-                    ProcessBuilder(dockerKillArgs.list).start().waitFor()
+                    val dockerKillCommand = DockerKillCommand(dockerRunCommand.containerName!!)
+                    ProcessBuilder(dockerKillCommand.args()).start().waitFor()
                 }
             }
             println("Thread finished")

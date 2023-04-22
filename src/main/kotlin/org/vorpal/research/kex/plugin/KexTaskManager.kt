@@ -4,7 +4,7 @@ import com.intellij.execution.filters.TextConsoleBuilderFactory
 import com.intellij.openapi.progress.ProgressManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.wm.ToolWindowManager
-import org.vorpal.research.kex.plugin.args.DockerKexArgs
+import org.vorpal.research.kex.plugin.command.DockerRunCommand
 
 class KexTaskManager(private val project: Project) {
 
@@ -19,8 +19,8 @@ class KexTaskManager(private val project: Project) {
         toolWindow.show()
     }
 
-    fun run(dockerKexArgs: DockerKexArgs) {
-        val kexBackgroundTask = KexBackgroundable(project, TITLE, dockerKexArgs, consoleView)
+    fun run(dockerRunCommand: DockerRunCommand) {
+        val kexBackgroundTask = KexBackgroundable(project, TITLE, dockerRunCommand, consoleView)
         ProgressManager.getInstance().run(kexBackgroundTask)
     }
 }
