@@ -26,7 +26,7 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="Kex" secondary="false" anchor="bottom" icon="/icons/kex_16.svg"
+        <toolWindow id="Kex" anchor="bottom" icon="/icons/kex_16.svg"
                     factoryClass="org.vorpal.research.kex.plugin.KexToolWindowFactory"
                     canCloseContents="true"
         />
