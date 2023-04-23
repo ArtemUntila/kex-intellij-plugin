@@ -1,5 +1,6 @@
 package org.vorpal.research.kex.plugin.settings.reader
 
+import org.jetbrains.uast.test.common.transform
 import org.vorpal.research.kex.plugin.settings.state.*
 import org.vorpal.research.kex.plugin.util.Option
 import org.vorpal.research.kex.plugin.util.Section
@@ -8,19 +9,16 @@ import kotlin.reflect.full.memberProperties
 
 object SettingsReader {
 
-    val allOptions: List<Option>
-        get() = kexOptions + testGenOptions + concolicOptions + executorOptions
-
-    val kexOptions: List<Option>
+    val kexOptions: Map<Option, String>
         get() = getOptions(Section.kex, KexOptionsStateComponent.instance.state)
 
-    val testGenOptions: List<Option>
+    val testGenOptions: Map<Option, String>
         get() = getOptions(Section.testGen, TestGenOptionsStateComponent.instance.state)
 
-    val concolicOptions: List<Option>
+    val concolicOptions: Map<Option, String>
         get() = getOptions(Section.concolic, ConcolicOptionsStateComponent.instance.state)
 
-    val executorOptions: List<Option>
+    val executorOptions: Map<Option, String>
         get() = getOptions(Section.executor, ExecutorOptionsStateComponent.instance.state)
 
     val kexOutputDir: String?
@@ -29,11 +27,10 @@ object SettingsReader {
             return if (state.kexOutput) state.outputDir else null
         }
 
-    private fun getOptions(section: Section, instance: Any): List<Option> {
-        val map = getPropertyValueMap(instance)
-        return map.toList().map { (name, value) ->
-            Option(section, name, value)
-        }
+    private fun getOptions(section: Section, instance: Any): Map<Option, String> {
+        return getPropertyValueMap(instance)
+            .mapKeys { Option(section, it.key) }
+            .mapValues { "${it.value}" }
     }
 
     private fun getPropertyValueMap(instance: Any): Map<String, Any> {

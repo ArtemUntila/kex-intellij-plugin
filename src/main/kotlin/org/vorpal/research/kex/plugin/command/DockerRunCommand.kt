@@ -37,24 +37,14 @@ class DockerRunCommand(private val image: String) : Command {
     }
 
     override fun args(): List<String> {
-        val args = mutableListOf("docker", "run")
+        val args = ArgsList("docker", "run")
 
         if (remove) args.add("--rm")
 
-        name?.let {
-            args.add("--name")
-            args.add(it)
-        }
+        name?.let { args.addOption("--name", it) }
 
-        ports.forEach { (localPort, containerPort) ->
-            args.add("-p")
-            args.add("$localPort:$containerPort")
-        }
-
-        volumes.forEach { (localPath, containerPath) ->
-            args.add("-v")
-            args.add("$localPath:$containerPath")
-        }
+        args.addBindOptions("-p", ports)
+        args.addBindOptions("-v", volumes)
 
         args.add(image)
 

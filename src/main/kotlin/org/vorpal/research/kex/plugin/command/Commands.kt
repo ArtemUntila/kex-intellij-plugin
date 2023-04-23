@@ -8,14 +8,11 @@ import org.vorpal.research.kex.plugin.settings.reader.SettingsReader
 
 private var dockerRunId = 0
 
-fun dockerRunCommand(): DockerRunCommand {
-    return DockerRunCommand(DOCKER_IMAGE)
+fun dockerRunKexCommand(classpath: Iterable<String>, target: String, testDir: String): DockerRunCommand {
+    val dockerRunCommand = DockerRunCommand(DOCKER_IMAGE)
         .remove()
         .name("$DOCKER_IMAGE-${dockerRunId++}")
-}
-
-fun dockerRunKexCommand(classpath: Iterable<String>, target: String, testDir: String): DockerRunCommand {
-    val dockerRunCommand = dockerRunCommand().addVolume(testDir, KEX_TEST)
+        .addVolume(testDir, KEX_TEST)
 
     SettingsReader.kexOutputDir?.let {
         dockerRunCommand.addVolume(it, KEX_OUTPUT)
@@ -26,17 +23,13 @@ fun dockerRunKexCommand(classpath: Iterable<String>, target: String, testDir: St
         dockerRunCommand.addVolume(localPath, containerPath)
     }
 
-    val kexCommand = kexCommand(classpathMap.values, target, KEX_OUTPUT)
+    val kexCommand = KexCommand(classpathMap.values, target, KEX_OUTPUT)
+        .addOptions(SettingsReader.kexOptions)
+        .addOptions(SettingsReader.concolicOptions)
+        .addOptions(SettingsReader.testGenOptions)
+        .addOptions(SettingsReader.executorOptions)
 
     return dockerRunCommand.containerCommand(kexCommand)
-}
-
-fun kexCommand(classpath: Iterable<String>, target: String, output: String): KexCommand {
-    val kexCommand = KexCommand(classpath, target, output)
-    SettingsReader.allOptions.forEach {
-        kexCommand.addOption(it)
-    }
-    return kexCommand
 }
 
 private fun localToContainerPath(localPath: String): String {

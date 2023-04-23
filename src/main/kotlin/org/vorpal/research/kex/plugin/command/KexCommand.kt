@@ -8,30 +8,25 @@ class KexCommand(
     private val output: String
 ) : Command {
 
-    private val options: MutableList<Option> = mutableListOf()
+    private val optionValueMap: MutableMap<Option, String> = mutableMapOf()
 
-    fun addOption(option: Option): KexCommand {
-        options.add(option)
+    fun addOption(option: Option, value: String): KexCommand {
+        optionValueMap[option] = value
+        return this
+    }
+
+    fun addOptions(options: Map<Option, String>): KexCommand {
+        optionValueMap.putAll(options)
         return this
     }
 
     override fun args(): List<String> {
-        val args = mutableListOf<String>()
+        val args = ArgsList()
 
-        val classpath = classpath.joinToString(":")
-        args.add("--classpath")
-        args.add(classpath)
-
-        args.add("--target")
-        args.add(target)
-
-        args.add("--output")
-        args.add(output)
-
-        options.forEach {
-            args.add("--option")
-            args.add("$it")
-        }
+        args.addOption("--classpath", classpath.joinToString(":"))
+        args.addOption("--target", target)
+        args.addOption("--output", output)
+        args.addBindOptions("--option", optionValueMap)
 
         return args
     }
