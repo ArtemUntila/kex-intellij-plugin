@@ -1,40 +1,39 @@
 package org.vorpal.research.kex.plugin.settings.reader
 
-import org.vorpal.research.kex.plugin.settings.*
-import org.vorpal.research.kex.plugin.util.OptionList
+import org.vorpal.research.kex.plugin.settings.state.*
+import org.vorpal.research.kex.plugin.util.Option
+import org.vorpal.research.kex.plugin.util.Section
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 
 object SettingsReader {
 
-    val kexOptions: List<String>
-        get() = getOptions("kex", KexOptionsStateComponent.instance.state)
+    val kexOptions: Map<Option, String>
+        get() = getOptions(Section.kex, KexOptionsStateComponent.instance.state)
 
-    val testGenOptions: List<String>
-        get() = getOptions("testGen", TestGenOptionsStateComponent.instance.state)
+    val testGenOptions: Map<Option, String>
+        get() = getOptions(Section.testGen, TestGenOptionsStateComponent.instance.state)
 
-    val concolicOptions: List<String>
-        get() = getOptions("concolic", ConcolicOptionsStateComponent.instance.state)
+    val concolicOptions: Map<Option, String>
+        get() = getOptions(Section.concolic, ConcolicOptionsStateComponent.instance.state)
 
-    val executorOptions: List<String>
-        get() = getOptions("executor", ExecutorOptionsStateComponent.instance.state)
+    val executorOptions: Map<Option, String>
+        get() = getOptions(Section.executor, ExecutorOptionsStateComponent.instance.state)
 
-    private fun getOptions(section: String, instance: Any): List<String> {
-        val map = getPropertyValueMap(instance)
-        val options = OptionList(section)
-        for ((option, value) in map) {
-            options.addOption(option, value)
+    val kexOutputDir: String?
+        get() {
+            val state = KexSettingsStateComponent.instance.state
+            return if (state.kexOutput) state.outputDir else null
         }
-        return options
+
+    private fun getOptions(section: Section, instance: Any): Map<Option, String> {
+        return getPropertyValueMap(instance)
+            .mapKeys { Option(section, it.key) }
+            .mapValues { "${it.value}" }
     }
 
     private fun getPropertyValueMap(instance: Any): Map<String, Any> {
         val properties = instance::class.memberProperties.map { it as KProperty1<Any, Any> }
         return properties.associateBy({ it.name }, { it.get(instance) })
-    }
-
-    fun getKexOutput(): String? {
-        val state = KexSettingsStateComponent.instance.state
-        return if (state.kexOutput) state.outputDir else null
     }
 }

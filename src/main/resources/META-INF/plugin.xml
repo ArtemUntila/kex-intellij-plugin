@@ -26,56 +26,61 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="Kex" secondary="false" anchor="bottom" icon="/icons/kex_16.svg"
+        <toolWindow id="Kex" anchor="bottom" icon="/icons/kex_13.svg" order="last"
                     factoryClass="org.vorpal.research.kex.plugin.KexToolWindowFactory"
                     canCloseContents="true"
         />
         <applicationConfigurable parentId="tools"
-                                 instance="org.vorpal.research.kex.plugin.settings.KexSettingsConfigurable"
-                                 id="org.vorpal.research.kex.plugin.settings.KexSettingsConfigurable"
+                                 instance="org.vorpal.research.kex.plugin.settings.view.KexSettingsConfigurable"
+                                 id="org.vorpal.research.kex.plugin.settings.view.KexSettingsConfigurable"
                                  displayName="Kex"/>
-        <applicationService serviceImplementation="org.vorpal.research.kex.plugin.settings.KexSettingsStateComponent"/>
+        <applicationService serviceImplementation="org.vorpal.research.kex.plugin.settings.state.KexSettingsStateComponent"/>
 
-        <applicationConfigurable parentId="org.vorpal.research.kex.plugin.settings.KexSettingsConfigurable"
-                                 instance="org.vorpal.research.kex.plugin.settings.KexOptionsConfigurable"
-                                 id="org.vorpal.research.kex.plugin.settings.KexOptionsConfigurable"
+        <applicationConfigurable parentId="org.vorpal.research.kex.plugin.settings.view.KexSettingsConfigurable"
+                                 instance="org.vorpal.research.kex.plugin.settings.view.KexOptionsConfigurable"
+                                 id="org.vorpal.research.kex.plugin.settings.view.KexOptionsConfigurable"
                                  displayName="Kex"/>
-        <applicationService serviceImplementation="org.vorpal.research.kex.plugin.settings.KexOptionsStateComponent"/>
+        <applicationService serviceImplementation="org.vorpal.research.kex.plugin.settings.state.KexOptionsStateComponent"/>
 
-        <applicationConfigurable parentId="org.vorpal.research.kex.plugin.settings.KexSettingsConfigurable"
-                                 instance="org.vorpal.research.kex.plugin.settings.TestGenOptionsConfigurable"
-                                 id="org.vorpal.research.kex.plugin.settings.TestGenOptionsConfigurable"
+        <applicationConfigurable parentId="org.vorpal.research.kex.plugin.settings.view.KexSettingsConfigurable"
+                                 instance="org.vorpal.research.kex.plugin.settings.view.TestGenOptionsConfigurable"
+                                 id="org.vorpal.research.kex.plugin.settings.view.TestGenOptionsConfigurable"
                                  displayName="Test Generation"/>
-        <applicationService serviceImplementation="org.vorpal.research.kex.plugin.settings.TestGenOptionsStateComponent"/>
+        <applicationService serviceImplementation="org.vorpal.research.kex.plugin.settings.state.TestGenOptionsStateComponent"/>
 
-        <applicationConfigurable parentId="org.vorpal.research.kex.plugin.settings.KexSettingsConfigurable"
-                                 instance="org.vorpal.research.kex.plugin.settings.ConcolicOptionsConfigurable"
-                                 id="org.vorpal.research.kex.plugin.settings.ConcolicOptionsConfigurable"
+        <applicationConfigurable parentId="org.vorpal.research.kex.plugin.settings.view.KexSettingsConfigurable"
+                                 instance="org.vorpal.research.kex.plugin.settings.view.ConcolicOptionsConfigurable"
+                                 id="org.vorpal.research.kex.plugin.settings.view.ConcolicOptionsConfigurable"
                                  displayName="Concolic"/>
-        <applicationService serviceImplementation="org.vorpal.research.kex.plugin.settings.ConcolicOptionsStateComponent"/>
+        <applicationService serviceImplementation="org.vorpal.research.kex.plugin.settings.state.ConcolicOptionsStateComponent"/>
 
-        <applicationConfigurable parentId="org.vorpal.research.kex.plugin.settings.KexSettingsConfigurable"
-                                 instance="org.vorpal.research.kex.plugin.settings.ExecutorOptionsConfigurable"
-                                 id="org.vorpal.research.kex.plugin.settings.ExecutorOptionsConfigurable"
+        <applicationConfigurable parentId="org.vorpal.research.kex.plugin.settings.view.KexSettingsConfigurable"
+                                 instance="org.vorpal.research.kex.plugin.settings.view.ExecutorOptionsConfigurable"
+                                 id="org.vorpal.research.kex.plugin.settings.view.ExecutorOptionsConfigurable"
                                  displayName="Executor"/>
-        <applicationService serviceImplementation="org.vorpal.research.kex.plugin.settings.ExecutorOptionsStateComponent"/>
+        <applicationService serviceImplementation="org.vorpal.research.kex.plugin.settings.state.ExecutorOptionsStateComponent"/>
     </extensions>
 
     <actions>
-        <!--TODO: Custom Icon (https://www.flaticon.com/free-icon/muffin_7808702?related_id=7808702&origin=tag)-->
-        <group id="ProjectViewActionGroup" class="org.vorpal.research.kex.plugin.ProjectViewActionGroup" text="Kex" popup="true"
+        <!--TODO: Custom Icon
+        current: https://www.flaticon.com/free-icon/muffin_7808702?related_id=7808702&origin=tag
+        more minimalistic: https://www.svgrepo.com/svg/4015/muffin
+        png2svg: https://www.pngtosvg.com/
+        resize svg: https://www.iloveimg.com/resize-image/resize-svg
+        -->
+        <group id="ProjectViewActionGroup" class="org.vorpal.research.kex.plugin.actions.ProjectViewActionGroup" text="Kex" popup="true"
                icon="/icons/kex_16.svg">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
-            <action class="org.vorpal.research.kex.plugin.ProjectViewAction"
+            <action class="org.vorpal.research.kex.plugin.actions.ProjectViewAction"
                     id="Kex.Actions.ProjectViewAction"
                     text="Generate Tests"
             />
         </group>
 
-        <group id="EditorActionGroup" class="org.vorpal.research.kex.plugin.EditorActionGroup" text="Kex" popup="true"
+        <group id="EditorActionGroup" class="org.vorpal.research.kex.plugin.actions.EditorActionGroup" text="Kex" popup="true"
                icon="/icons/kex_16.svg">
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
-            <action class="org.vorpal.research.kex.plugin.EditorAction"
+            <action class="org.vorpal.research.kex.plugin.actions.EditorAction"
                     id="Kex.Actions.EditorAction"
                     text="Generate Tests"
             />

@@ -1,11 +1,11 @@
-package org.vorpal.research.kex.plugin.settings
+package org.vorpal.research.kex.plugin.settings.view
 
 import com.intellij.codeInspection.javaDoc.JavadocUIUtil.bindItem
 import com.intellij.openapi.options.BoundConfigurable
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.ui.dsl.builder.bindIntText
-import com.intellij.ui.dsl.builder.bindText
 import com.intellij.ui.dsl.builder.panel
+import org.vorpal.research.kex.plugin.settings.state.ConcolicOptionsStateComponent
 
 class ConcolicOptionsConfigurable : BoundConfigurable("Concolic") {
 

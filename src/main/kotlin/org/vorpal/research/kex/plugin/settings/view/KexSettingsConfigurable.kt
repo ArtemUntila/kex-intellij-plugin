@@ -1,4 +1,4 @@
-package org.vorpal.research.kex.plugin.settings
+package org.vorpal.research.kex.plugin.settings.view
 
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory
 import com.intellij.openapi.options.BoundConfigurable
@@ -6,6 +6,7 @@ import com.intellij.openapi.ui.DialogPanel
 import com.intellij.ui.components.JBCheckBox
 import com.intellij.ui.dsl.builder.*
 import com.intellij.ui.dsl.gridLayout.HorizontalAlign
+import org.vorpal.research.kex.plugin.settings.state.KexSettingsStateComponent
 
 class KexSettingsConfigurable : BoundConfigurable("Kex") {
 

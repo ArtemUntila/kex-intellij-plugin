@@ -1,11 +1,11 @@
-package org.vorpal.research.kex.plugin.settings
+package org.vorpal.research.kex.plugin.settings.state
 
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
 
-@State(name = "org.vorpal.research.kex.plugin.settings.ConcolicOptionsState", storages = [Storage("KexSettings.xml")])
+@State(name = "ConcolicOptions", storages = [Storage("kex.xml")])
 class ConcolicOptionsStateComponent : PersistentStateComponent<ConcolicOptionsStateComponent.ConcolicOptionsState> {
 
     companion object {
