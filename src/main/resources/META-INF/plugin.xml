@@ -26,7 +26,7 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="Kex" anchor="bottom" icon="/icons/kex_16.svg"
+        <toolWindow id="Kex" anchor="bottom" icon="/icons/kex_13.svg" order="last"
                     factoryClass="org.vorpal.research.kex.plugin.KexToolWindowFactory"
                     canCloseContents="true"
         />
@@ -62,7 +62,12 @@
     </extensions>
 
     <actions>
-        <!--TODO: Custom Icon (https://www.flaticon.com/free-icon/muffin_7808702?related_id=7808702&origin=tag)-->
+        <!--TODO: Custom Icon
+        current: https://www.flaticon.com/free-icon/muffin_7808702?related_id=7808702&origin=tag
+        more minimalistic: https://www.svgrepo.com/svg/4015/muffin
+        png2svg: https://www.pngtosvg.com/
+        resize svg: https://www.iloveimg.com/resize-image/resize-svg
+        -->
         <group id="ProjectViewActionGroup" class="org.vorpal.research.kex.plugin.actions.ProjectViewActionGroup" text="Kex" popup="true"
                icon="/icons/kex_16.svg">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>

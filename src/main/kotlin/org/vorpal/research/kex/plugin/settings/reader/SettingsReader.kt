@@ -1,6 +1,5 @@
 package org.vorpal.research.kex.plugin.settings.reader
 
-import org.jetbrains.uast.test.common.transform
 import org.vorpal.research.kex.plugin.settings.state.*
 import org.vorpal.research.kex.plugin.util.Option
 import org.vorpal.research.kex.plugin.util.Section
