@@ -39,6 +39,9 @@ class TestGenOptionsConfigurable : BoundConfigurable("Test Generation") {
                 row("Test timeout:") {
                     intTextField().bindIntText(state::testTimeout)
                 }
+                row {
+                    checkBox("Surround in try-catch").bindSelected(state::surroundInTryCatch)
+                }
             }.enabledIf(cb.selected)
         }
     }

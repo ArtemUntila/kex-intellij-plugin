@@ -30,6 +30,7 @@ class TestGenOptionsStateComponent : PersistentStateComponent<TestGenOptionsStat
         var testCaseLanguage: String = "java",
         var generateSetup: Boolean = true,
         var logJUnit: Boolean = false,
-        var testTimeout: Int = 100000
+        var testTimeout: Int = 100,
+        var surroundInTryCatch: Boolean = false
     )
 }

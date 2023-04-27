@@ -41,6 +41,9 @@ class KexOptionsConfigurable : BoundConfigurable("Kex") {
             row {
                 checkBox("Print detailed coverage").bindSelected(state::printDetailedCoverage)
             }
+            row {
+                checkBox("Use reflection info").bindSelected(state::useReflectionInfo)
+            }
         }
     }
 }
