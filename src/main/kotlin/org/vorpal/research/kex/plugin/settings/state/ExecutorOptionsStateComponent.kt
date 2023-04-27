@@ -27,8 +27,8 @@ class ExecutorOptionsStateComponent : PersistentStateComponent<ExecutorOptionsSt
         var executorPath: String = "kex-executor/target/kex-executor-0.0.1-jar-with-dependencies.jar",
         var executorConfigPath: String = "kex.ini",
         var executorPolicyPath: String = "kex.policy",
-        var numberOfExecutors: Int = 8,
+        var numberOfWorkers: Int = 2,
         var masterJvmParams: String = "-Xmx2g",
-        var workerJvmParams: String = "-Xmx2g"
+        var workerJvmParams: String = "-Xmx4g"
     )
 }

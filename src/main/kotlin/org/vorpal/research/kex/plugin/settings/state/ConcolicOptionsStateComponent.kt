@@ -24,8 +24,8 @@ class ConcolicOptionsStateComponent : PersistentStateComponent<ConcolicOptionsSt
     }
 
     data class ConcolicOptionsState(
-        var timeLimit: Int = 120000,
-        var numberOfExecutors: Int = 16,
+        var timeLimit: Int = 600,
+        var numberOfExecutors: Int = 8,
         var searchStrategy: String = "cgs"
     )
 }

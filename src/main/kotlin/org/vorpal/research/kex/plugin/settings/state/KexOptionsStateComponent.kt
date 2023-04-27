@@ -34,5 +34,6 @@ class KexOptionsStateComponent : PersistentStateComponent<KexOptionsStateCompone
         var useJavaRuntime: Boolean = true,
         var useKexRuntime: Boolean = true,
         var printDetailedCoverage: Boolean = true,
+        var useReflectionInfo: Boolean = false
     )
 }

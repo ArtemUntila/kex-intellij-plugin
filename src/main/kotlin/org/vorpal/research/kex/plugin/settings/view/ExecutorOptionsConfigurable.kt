@@ -21,7 +21,7 @@ class ExecutorOptionsConfigurable : BoundConfigurable("Executor") {
                 textField().bindText(state::executorPolicyPath)
             }
             row("Number of workers:") {
-                intTextField().bindIntText(state::numberOfExecutors)
+                intTextField().bindIntText(state::numberOfWorkers)
             }
             row("Master JVM params:") {
                 textField().bindText(state::masterJvmParams)
