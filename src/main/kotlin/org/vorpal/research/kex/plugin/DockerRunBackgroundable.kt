@@ -10,10 +10,10 @@ import org.vorpal.research.kex.plugin.command.DockerKillCommand
 import org.vorpal.research.kex.plugin.command.DockerRunCommand
 import org.vorpal.research.kex.plugin.util.onCanceled
 
-class KexBackgroundable(
+class DockerRunBackgroundable(
     project: Project, title: String,
     private val dockerRunCommand: DockerRunCommand,
-    private val consoleView: ConsoleView
+    private val consoleView: ConsoleView? = null
 ) : Backgroundable(project, title) {
 
     override fun run(indicator: ProgressIndicator) {
@@ -23,7 +23,7 @@ class KexBackgroundable(
         }
 
         val processHandler = OSProcessHandler(GeneralCommandLine(dockerRunCommand.args()))
-        consoleView.attachToProcess(processHandler)
+        consoleView?.attachToProcess(processHandler)
         processHandler.startNotify()
         processHandler.waitFor()
     }
