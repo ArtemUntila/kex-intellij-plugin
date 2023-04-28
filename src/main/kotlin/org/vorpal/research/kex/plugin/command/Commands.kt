@@ -4,7 +4,7 @@ import org.vorpal.research.kex.plugin.DEPS
 import org.vorpal.research.kex.plugin.DOCKER_IMAGE
 import org.vorpal.research.kex.plugin.KEX_OUTPUT
 import org.vorpal.research.kex.plugin.KEX_TEST
-import org.vorpal.research.kex.plugin.settings.reader.SettingsReader
+import org.vorpal.research.kex.plugin.settings.SettingsReader
 
 private var dockerRunId = 0
 

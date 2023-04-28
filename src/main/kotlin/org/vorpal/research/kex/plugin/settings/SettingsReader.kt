@@ -1,4 +1,4 @@
-package org.vorpal.research.kex.plugin.settings.reader
+package org.vorpal.research.kex.plugin.settings
 
 import org.vorpal.research.kex.plugin.settings.state.*
 import org.vorpal.research.kex.plugin.util.Option
