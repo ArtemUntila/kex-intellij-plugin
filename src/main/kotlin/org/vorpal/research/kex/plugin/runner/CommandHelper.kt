@@ -1,7 +1,6 @@
 package org.vorpal.research.kex.plugin.runner
 
 import org.vorpal.research.kex.plugin.DEPS
-import org.vorpal.research.kex.plugin.DOCKER_IMAGE
 import org.vorpal.research.kex.plugin.KEX_OUTPUT
 import org.vorpal.research.kex.plugin.command.DockerRunCommand
 import org.vorpal.research.kex.plugin.command.KexCommand
@@ -29,9 +28,10 @@ class CommandHelper(
     fun default(): DockerRunCommand = dockerRunCommand.containerCommand(kexCommand)
 
     private fun defaultDockerRunCommand(): DockerRunCommand {
-        val dockerRunCommand = DockerRunCommand(DOCKER_IMAGE)
+        val dockerImage = SettingsReader.dockerImage
+        val dockerRunCommand = DockerRunCommand(dockerImage)
             .remove()
-            .name("$DOCKER_IMAGE-${id++}")
+            .name("$dockerImage-${id++}")
             .addVolume(testDir, "$KEX_OUTPUT/${SettingsReader.testsDir}")
 
         SettingsReader.kexOutputDir?.let {

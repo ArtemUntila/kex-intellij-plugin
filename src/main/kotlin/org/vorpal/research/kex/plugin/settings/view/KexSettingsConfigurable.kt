@@ -24,6 +24,12 @@ class KexSettingsConfigurable : BoundConfigurable("Kex") {
                     .horizontalAlign(HorizontalAlign.FILL)
                     .bindText(state::outputDir)
             }.enabledIf(cb.selected)
+            // TODO: group title
+            group {
+                row("Docker image:") {
+                    textField().bindText(state::dockerImage)
+                }
+            }
         }
     }
 }
