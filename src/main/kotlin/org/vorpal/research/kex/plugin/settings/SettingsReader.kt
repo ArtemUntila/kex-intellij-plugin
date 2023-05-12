@@ -26,6 +26,9 @@ object SettingsReader {
             return if (state.kexOutput) state.outputDir else null
         }
 
+    val testsDir: String
+        get() = TestGenOptionsStateComponent.instance.state.testsDir
+
     private fun getOptions(section: Section, instance: Any): Map<Option, String> {
         return getPropertyValueMap(instance)
             .mapKeys { Option(section, it.key) }
