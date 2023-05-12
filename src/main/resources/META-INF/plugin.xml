@@ -27,7 +27,7 @@
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow id="Kex" anchor="bottom" icon="/icons/kex_13.svg" order="last"
-                    factoryClass="org.vorpal.research.kex.plugin.KexToolWindowFactory"
+                    factoryClass="org.vorpal.research.kex.plugin.tw.KexToolWindowFactory"
                     canCloseContents="true"
         />
         <applicationConfigurable parentId="tools"

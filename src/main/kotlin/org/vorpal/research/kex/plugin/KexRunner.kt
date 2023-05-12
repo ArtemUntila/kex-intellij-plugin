@@ -4,6 +4,7 @@ import com.intellij.openapi.module.Module
 import com.intellij.openapi.progress.ProgressManager
 import com.intellij.openapi.project.Project
 import org.vorpal.research.kex.plugin.command.dockerRunKexCommand
+import org.vorpal.research.kex.plugin.tw.ToolWindowHelper
 import org.vorpal.research.kex.plugin.util.getClasspathList
 import org.vorpal.research.kex.plugin.util.getTestDirPath
 import org.vorpal.research.kex.plugin.util.onBuildSuccess
