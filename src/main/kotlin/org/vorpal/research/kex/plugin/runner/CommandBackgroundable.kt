@@ -1,4 +1,4 @@
-package org.vorpal.research.kex.plugin
+package org.vorpal.research.kex.plugin.runner
 
 import com.intellij.execution.configurations.GeneralCommandLine
 import com.intellij.execution.process.OSProcessHandler

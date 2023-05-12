@@ -1,5 +1,8 @@
-package org.vorpal.research.kex.plugin
+package org.vorpal.research.kex.plugin.runner
 
+import org.vorpal.research.kex.plugin.DEPS
+import org.vorpal.research.kex.plugin.DOCKER_IMAGE
+import org.vorpal.research.kex.plugin.KEX_OUTPUT
 import org.vorpal.research.kex.plugin.command.DockerRunCommand
 import org.vorpal.research.kex.plugin.command.KexCommand
 import org.vorpal.research.kex.plugin.settings.SettingsReader
@@ -51,6 +54,7 @@ class CommandHelper(
     }
 
     private fun localToContainerPath(localPath: String): String {
+        // TODO: Find something more efficient
         val list = localPath.split(System.getProperty("file.separator")).takeLast(5)
         return "$DEPS/" + list.joinToString("/")
     }
