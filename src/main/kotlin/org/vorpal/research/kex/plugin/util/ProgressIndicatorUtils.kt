@@ -17,6 +17,7 @@ fun ProgressIndicator.onCanceled(checkIntervalMillis: Long, block: () -> Unit) {
                 delay(checkIntervalMillis)
             } catch (_: ProcessCanceledException) {
                 block()
+                break
             }
         }
     }
