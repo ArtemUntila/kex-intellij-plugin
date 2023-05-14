@@ -28,8 +28,8 @@
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow id="Kex" anchor="bottom" icon="/icons/kex13.svg" order="last"
                     factoryClass="org.vorpal.research.kex.plugin.tw.KexToolWindowFactory"
-                    canCloseContents="true"
-        />
+                    canCloseContents="true"/>
+
         <applicationConfigurable parentId="tools"
                                  instance="org.vorpal.research.kex.plugin.settings.view.KexSettingsConfigurable"
                                  id="org.vorpal.research.kex.plugin.settings.view.KexSettingsConfigurable"
@@ -73,8 +73,7 @@
             <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
             <action class="org.vorpal.research.kex.plugin.actions.ProjectViewAction"
                     id="Kex.Actions.ProjectViewAction"
-                    text="Generate Tests"
-            />
+                    text="Generate Tests"/>
         </group>
 
         <group id="EditorActionGroup" class="org.vorpal.research.kex.plugin.actions.EditorActionGroup" text="Kex" popup="true"
@@ -82,8 +81,10 @@
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
             <action class="org.vorpal.research.kex.plugin.actions.EditorAction"
                     id="Kex.Actions.EditorAction"
-                    text="Generate Tests"
-            />
+                    text="Generate Tests"/>
+            <action class="org.vorpal.research.kex.plugin.actions.EditorMethodGraphAction"
+                    id="Kex.Actions.EditorMethodGraphAction"
+                    text="Graph"/>
         </group>
     </actions>
 
