@@ -14,7 +14,7 @@ For Kex execution plugin uses Docker image, which has not yet been published to 
 You need to build it yourself using [Dockerfile](Dockerfile):
 
 ```
-docker build -t kex-jre-slim --progress=plain
+docker build -t kex --progress=plain
 ```
 
 ### IDE Development Instance

@@ -1,4 +1,4 @@
-package org.vorpal.research.kex.plugin
+package org.vorpal.research.kex.plugin.tw
 
 import com.intellij.openapi.project.DumbAware
 import com.intellij.openapi.project.Project
