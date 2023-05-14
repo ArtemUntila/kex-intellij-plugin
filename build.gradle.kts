@@ -1,9 +1,13 @@
 val kotlinVersion: String by project
+val serializationVersion: String by project
+val smartgraphVersion: String by project
 
 plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "1.8.0"
     id("org.jetbrains.intellij") version "1.13.3"
+    id("org.openjfx.javafxplugin") version "0.0.13"
+    kotlin("plugin.serialization") version "1.8.0"
 }
 
 group = "org.vorpal.research"
@@ -11,6 +15,7 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    maven("https://jitpack.io")
 }
 
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
@@ -49,4 +54,11 @@ tasks {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
+    implementation("com.github.Artyom-IWT:JavaFXSmartGraph:$smartgraphVersion")
+}
+
+javafx {
+    version = "19"
+    modules("javafx.controls", "javafx.swing")
 }
