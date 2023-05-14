@@ -1,16 +1,10 @@
 FROM archlinux as builder
 
-# Download database files
-RUN pacman -Sy
-
-# Java 8
-RUN pacman -S jdk8-openjdk --noconfirm
-
-# Git
-RUN pacman -S git --noconfirm
-
-# Maven
-RUN pacman -S maven --noconfirm
+# Download updates + required packages
+RUN pacman -Sy --noconfirm \
+    git \
+    jdk8-openjdk \
+    maven
 
 # Clone Kex
 WORKDIR /home
@@ -21,16 +15,10 @@ WORKDIR /home/kex
 RUN mvn package
 
 
-FROM openjdk:jre-slim
-COPY --from=builder /home/kex /kex
-RUN mv /kex/kex-runner/target/kex-runner-*-jar-with-dependencies.jar /kex/kex-runner/target/kex-runner.jar
-WORKDIR /kex
-ENTRYPOINT ["java", \
-    "-Xmx8g", \
-    "-Xss1g", \
-    "-Djava.security.manager", \
-    "-Djava.security.policy==kex.policy", \
-    "-Dlogback.statusListenerClass=ch.qos.logback.core.status.NopStatusListener", \
-    "-jar", "kex-runner/target/kex-runner.jar" \
-]
-
+FROM archlinux as runner
+COPY --from=builder /home/kex /home/kex
+# Download updates + JDK 8
+RUN pacman -Sy jdk8-openjdk --noconfirm
+# Entrypoint: run Kex
+WORKDIR /home/kex
+ENTRYPOINT ["./kex.sh"]
