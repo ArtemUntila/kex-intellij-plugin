@@ -2,9 +2,11 @@ package org.vorpal.research.kex.plugin.runner
 
 import org.vorpal.research.kex.plugin.DEPS
 import org.vorpal.research.kex.plugin.KEX_OUTPUT
+import org.vorpal.research.kex.plugin.KEX_PORT
 import org.vorpal.research.kex.plugin.command.DockerRunCommand
 import org.vorpal.research.kex.plugin.command.KexCommand
 import org.vorpal.research.kex.plugin.settings.SettingsReader
+import org.vorpal.research.kex.plugin.util.Section
 
 class CommandHelper(
     classpath: Iterable<String>,
@@ -26,6 +28,12 @@ class CommandHelper(
     }
 
     fun default(): DockerRunCommand = dockerRunCommand.containerCommand(kexCommand)
+
+    fun gui(port: Int): DockerRunCommand {
+        dockerRunCommand.addPort(port, KEX_PORT)
+        kexCommand.addOption(Section.concolic, "searchStrategy", "${SettingsReader.searchStrategy}-gui")
+        return default()
+    }
 
     private fun defaultDockerRunCommand(): DockerRunCommand {
         val dockerImage = SettingsReader.dockerImage
