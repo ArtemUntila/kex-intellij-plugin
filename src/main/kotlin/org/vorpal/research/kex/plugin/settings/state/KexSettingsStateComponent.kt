@@ -26,6 +26,6 @@ class KexSettingsStateComponent : PersistentStateComponent<KexSettingsStateCompo
     data class KexSettingsState(
         var kexOutput: Boolean = false,
         var outputDir: String = "",
-        var dockerImage: String = "kex-jre-slim"
+        var dockerImage: String = "kex"
     )
 }
