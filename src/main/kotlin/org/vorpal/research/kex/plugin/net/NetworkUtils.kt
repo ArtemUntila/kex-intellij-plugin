@@ -1,6 +1,5 @@
 package org.vorpal.research.kex.plugin.net
 
-import kotlinx.coroutines.delay
 import java.net.ServerSocket
 import java.util.function.Predicate
 
@@ -11,7 +10,7 @@ fun findFreePort(): Int {
     }
 }
 
-suspend fun getConnectedClient(
+fun getConnectedClient(
     port: Int, timeout: Long,
     reconnectPause: Long = 2000,
     stopPredicate: Predicate<Client> = Predicate { it.isConnected }
@@ -28,7 +27,7 @@ suspend fun getConnectedClient(
             status = true
             break
         }
-        delay(reconnectPause)
+        Thread.sleep(reconnectPause)
         timeElapsed = System.currentTimeMillis() - startTime
     }
 
