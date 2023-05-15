@@ -1,0 +1,19 @@
+.vertex-label {
+    -fx-font: 10pt "monospace";
+}
+
+.vertex, .edge, .arrow {
+    -fx-stroke-width: 2;
+    -fx-stroke: #955AE0;
+}
+
+.vertex {
+    -fx-stroke-type: inside; /* you should keep this if using arrows */
+    -fx-fill: #EEE0FF;
+}
+
+.edge {
+    -fx-fill: transparent; /* important for curved edges */
+    -fx-stroke-line-cap: round;
+    -fx-opacity: 0.8;
+}

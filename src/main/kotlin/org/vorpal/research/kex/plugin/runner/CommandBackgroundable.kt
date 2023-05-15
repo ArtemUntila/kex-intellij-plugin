@@ -16,7 +16,14 @@ class CommandBackgroundable(
     private val consoleView: ConsoleView? = null
 ) : Backgroundable(project, title) {
 
+    private var _isRunning = false
+
+    val isRunning: Boolean
+        get() = _isRunning
+
     override fun run(indicator: ProgressIndicator) {
+        _isRunning = true
+
         indicator.onCanceled(1000) {
             cancelCommand?.let {
                 ProcessBuilder(it.args()).start().waitFor()
@@ -27,5 +34,7 @@ class CommandBackgroundable(
         consoleView?.attachToProcess(processHandler)
         processHandler.startNotify()
         processHandler.waitFor()
+
+        _isRunning = false
     }
 }

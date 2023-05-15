@@ -26,10 +26,10 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="Kex" anchor="bottom" icon="/icons/kex_13.svg" order="last"
+        <toolWindow id="Kex" anchor="bottom" icon="/icons/kex13.svg" order="last"
                     factoryClass="org.vorpal.research.kex.plugin.tw.KexToolWindowFactory"
-                    canCloseContents="true"
-        />
+                    canCloseContents="true"/>
+
         <applicationConfigurable parentId="tools"
                                  instance="org.vorpal.research.kex.plugin.settings.view.KexSettingsConfigurable"
                                  id="org.vorpal.research.kex.plugin.settings.view.KexSettingsConfigurable"
@@ -69,21 +69,22 @@
         resize svg: https://www.iloveimg.com/resize-image/resize-svg
         -->
         <group id="ProjectViewActionGroup" class="org.vorpal.research.kex.plugin.actions.ProjectViewActionGroup" text="Kex" popup="true"
-               icon="/icons/kex_16.svg">
+               icon="/icons/kex16.svg">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
             <action class="org.vorpal.research.kex.plugin.actions.ProjectViewAction"
                     id="Kex.Actions.ProjectViewAction"
-                    text="Generate Tests"
-            />
+                    text="Generate Tests"/>
         </group>
 
         <group id="EditorActionGroup" class="org.vorpal.research.kex.plugin.actions.EditorActionGroup" text="Kex" popup="true"
-               icon="/icons/kex_16.svg">
+               icon="/icons/kex16.svg">
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
             <action class="org.vorpal.research.kex.plugin.actions.EditorAction"
                     id="Kex.Actions.EditorAction"
-                    text="Generate Tests"
-            />
+                    text="Generate Tests"/>
+            <action class="org.vorpal.research.kex.plugin.actions.EditorMethodGraphAction"
+                    id="Kex.Actions.EditorMethodGraphAction"
+                    text="Graph"/>
         </group>
     </actions>
 

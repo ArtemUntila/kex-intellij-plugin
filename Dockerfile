@@ -8,7 +8,7 @@ RUN pacman -Sy --noconfirm \
 
 # Clone Kex
 WORKDIR /home
-RUN git clone https://github.com/vorpal-research/kex.git
+RUN git clone -b gui-strategy https://github.com/Artyom-IWT/kex.git
 
 # Build Kex
 WORKDIR /home/kex

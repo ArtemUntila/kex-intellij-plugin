@@ -8,29 +8,35 @@ import kotlin.reflect.full.memberProperties
 
 object SettingsReader {
 
+    private val kexSettingsState = KexSettingsStateComponent.instance.state
+    private val kexOptionsState = KexOptionsStateComponent.instance.state
+    private val testGenOptionsState = TestGenOptionsStateComponent.instance.state
+    private val concolicOptionsState = ConcolicOptionsStateComponent.instance.state
+    private val executorOptionsState = ExecutorOptionsStateComponent.instance.state
+
     val kexOptions: Map<Option, String>
-        get() = getOptions(Section.kex, KexOptionsStateComponent.instance.state)
+        get() = getOptions(Section.kex, kexOptionsState)
 
     val testGenOptions: Map<Option, String>
-        get() = getOptions(Section.testGen, TestGenOptionsStateComponent.instance.state)
+        get() = getOptions(Section.testGen, testGenOptionsState)
 
     val concolicOptions: Map<Option, String>
-        get() = getOptions(Section.concolic, ConcolicOptionsStateComponent.instance.state)
+        get() = getOptions(Section.concolic, concolicOptionsState)
 
     val executorOptions: Map<Option, String>
-        get() = getOptions(Section.executor, ExecutorOptionsStateComponent.instance.state)
+        get() = getOptions(Section.executor, executorOptionsState)
 
     val kexOutputDir: String?
-        get() {
-            val state = KexSettingsStateComponent.instance.state
-            return if (state.kexOutput) state.outputDir else null
-        }
+        get() = if (kexSettingsState.kexOutput) kexSettingsState.outputDir else null
 
     val testsDir: String
-        get() = TestGenOptionsStateComponent.instance.state.testsDir
+        get() = testGenOptionsState.testsDir
 
     val dockerImage: String
-        get() = KexSettingsStateComponent.instance.state.dockerImage
+        get() = kexSettingsState.dockerImage
+
+    val searchStrategy: String
+        get() = concolicOptionsState.searchStrategy
 
     private fun getOptions(section: Section, instance: Any): Map<Option, String> {
         return getPropertyValueMap(instance)

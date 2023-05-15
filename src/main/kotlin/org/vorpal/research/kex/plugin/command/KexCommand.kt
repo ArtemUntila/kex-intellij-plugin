@@ -1,6 +1,7 @@
 package org.vorpal.research.kex.plugin.command
 
 import org.vorpal.research.kex.plugin.util.Option
+import org.vorpal.research.kex.plugin.util.Section
 
 class KexCommand(
     private val classpath: Iterable<String>,
@@ -13,6 +14,10 @@ class KexCommand(
     fun addOption(option: Option, value: String): KexCommand {
         optionValueMap[option] = value
         return this
+    }
+
+    fun addOption(section: Section, name: String, value: String): KexCommand {
+        return this.addOption(Option(section, name), value)
     }
 
     fun addOptions(options: Map<Option, String>): KexCommand {
