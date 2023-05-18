@@ -1,6 +1,5 @@
 package org.vorpal.research.kex.plugin.runner
 
-import org.vorpal.research.kex.plugin.DEPS
 import org.vorpal.research.kex.plugin.KEX_OUTPUT
 import org.vorpal.research.kex.plugin.KEX_PORT
 import org.vorpal.research.kex.plugin.command.DockerRunCommand
@@ -10,11 +9,13 @@ import org.vorpal.research.kex.plugin.util.Section
 
 class CommandHelper(
     classpath: Iterable<String>,
-    private val target: String, private val testDir: String
+    private val target: String,
+    private val testDir: String
 ) {
 
-    companion object {
-        private var id = 0
+    private companion object {
+        var id = 0
+        val isWindows = System.getProperty("os.name").startsWith("Windows")
     }
 
     private val classpathMap: Map<String, String>
@@ -62,8 +63,7 @@ class CommandHelper(
     }
 
     private fun localToContainerPath(localPath: String): String {
-        // TODO: Find something more efficient
-        val list = localPath.split(System.getProperty("file.separator")).takeLast(5)
-        return "$DEPS/" + list.joinToString("/")
+        return if (isWindows) "/" + localPath.replace(":", "").replace("\\", "/")
+        else localPath
     }
 }
