@@ -13,17 +13,22 @@ data class KexVertex(
     @get:SmartLabelSource
     val name: String
 ) {
-    override fun toString(): String = "KexVertex(id=$id, name='$name')"
+    val type: KexVertexType?
+        get() = when {
+            name.startsWith("@S") -> KexVertexType.STATE
+            name.startsWith("@P") -> KexVertexType.PATH
+            else -> null
+        }
+}
+
+enum class KexVertexType {
+    STATE, PATH
 }
 
 data class KexEdge(
     val up: KexVertex,
     val down: KexVertex
-) {
-    override fun toString(): String {
-        return "KexEdge(up=${up}, down=$down)"
-    }
-}
+)
 
 class KexGraph : DigraphEdgeList<KexVertex, KexEdge>() {
 

@@ -1,12 +1,12 @@
 package org.vorpal.research.kex.plugin.gui
 
-import com.brunomnsilva.smartgraph.containers.SmartGraphDemoContainer
-import com.brunomnsilva.smartgraph.graphview.SmartGraphPanel
 import com.brunomnsilva.smartgraph.graphview.SmartGraphProperties
+import javafx.beans.property.SimpleBooleanProperty
 import javafx.scene.Scene
+import java.util.function.Consumer
 
 
-class KexGraphPanel : JFXComponentWrapper() {
+class KexGraphPanel(width: Double = 1024.0, height: Double = 768.0) : JFXComponentWrapper() {
 
     private companion object {
         val classLoader = Companion::class.java.classLoader
@@ -15,13 +15,47 @@ class KexGraphPanel : JFXComponentWrapper() {
     }
 
     private val graph = KexGraph()
-    private val graphView = SmartGraphPanel(graph, PROPERTIES, null, CSS_FILE)
-    private val graphPane = SmartGraphDemoContainer(graphView)
+    private val graphView = KexSmartGraphPanel(graph, CSS_FILE, PROPERTIES)
+
+    private val controlPane = KexControlPane(graphView)
+    private val controlsDisabled = SimpleBooleanProperty(true)
+    private val continueSelected = SimpleBooleanProperty(false)
+
+    private var reverseAction: Consumer<KexVertex>? = null
+    private var nextAction: Runnable? = null
 
     init {
-        setScene(Scene(graphPane))
+        setScene(Scene(controlPane, width, height))
         graphView.setAutomaticLayout(true)
         graphView.init()
+        initControls()
+    }
+
+    private fun initControls() {
+        controlPane.nextButton.disableProperty().bindBidirectional(controlsDisabled)
+        controlPane.continueCheckBox.selectedProperty().bindBidirectional(continueSelected)
+
+        controlPane.nextButton.setOnAction {
+            disableControls()
+            nextAction?.run()
+        }
+
+        graphView.showVertexContextMenuIf {
+            !controlsDisabled.value && (it.underlyingVertex.element().type == KexVertexType.PATH)
+        }
+
+        graphView.addContextMenuItem("reverse") { smartGraphVertex ->
+            disableControls()
+            reverseAction?.accept(smartGraphVertex.underlyingVertex.element())
+        }
+    }
+
+    fun onPathVertexReverse(consumer: Consumer<KexVertex>) {
+        reverseAction = consumer
+    }
+
+    fun onNext(runnable: Runnable) {
+        nextAction = runnable
     }
 
     fun addVerticesAsTrace(vertices: Iterable<KexVertex>) {
@@ -39,6 +73,22 @@ class KexGraphPanel : JFXComponentWrapper() {
         }
 
         if (updated) update()
+
+        if (continueSelected.value) nextAction?.run()
+        else enableControls()
+    }
+
+    private fun disableControls() {
+        controlsDisabled.value = true
+    }
+
+    private fun enableControls() {
+        controlsDisabled.value = false
+    }
+
+    fun stopControls() {
+        disableControls()
+        controlPane.continueCheckBox.isDisable = true
     }
 
     fun update(wait: Boolean = false) {

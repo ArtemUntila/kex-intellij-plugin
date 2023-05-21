@@ -7,22 +7,18 @@ import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
 
 
-class KexWindow(
-    project: Project, title: String, componentWrapper: JComponentWrapper,
-    width: Int = 1024, height: Int = 768
-) {
-
-    private val frameWrapper = FrameWrapper(project = project, title = title, component = componentWrapper.component)
-    private val size = Dimension(width, height)
+class KexWindow(project: Project, title: String, content: JComponentWrapper) {
 
     private companion object {
         val minimumSize = Dimension(800, 600)
     }
 
+    private val frameWrapper = FrameWrapper(project = project, title = title, component = content.component)
+
     init {
         val frame = frameWrapper.getFrame()
         frame.minimumSize = minimumSize
-        frame.size = size
+        frame.size = content.size
         frame.setLocationRelativeTo(null)  // center
         frameWrapper.show(false)
     }
