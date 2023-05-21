@@ -6,7 +6,7 @@ import com.brunomnsilva.smartgraph.graphview.SmartGraphProperties
 import javafx.scene.Scene
 
 
-class KexGraphPanel : JFXComponentWrapper() {
+class KexGraphPanel(width: Double = 1024.0, height: Double = 768.0) : JFXComponentWrapper() {
 
     private companion object {
         val classLoader = Companion::class.java.classLoader
@@ -19,7 +19,7 @@ class KexGraphPanel : JFXComponentWrapper() {
     private val graphPane = SmartGraphDemoContainer(graphView)
 
     init {
-        setScene(Scene(graphPane))
+        setScene(Scene(graphPane, width, height))
         graphView.setAutomaticLayout(true)
         graphView.init()
     }
