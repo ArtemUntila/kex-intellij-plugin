@@ -31,8 +31,12 @@ fun getConnectedClient(
         timeElapsed = System.currentTimeMillis() - startTime
     }
 
-    if (status && client.isConnected) return client
-    else throw ConnectionFailedException()
+    when {
+        !status -> throw ConnectionTimeoutException()
+        !client.isConnected -> throw ConnectionFailedException()
+        else -> return client
+    }
 }
 
+class ConnectionTimeoutException : Exception()
 class ConnectionFailedException : Exception()

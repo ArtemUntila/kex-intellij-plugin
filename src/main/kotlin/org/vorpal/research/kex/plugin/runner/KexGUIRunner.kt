@@ -5,14 +5,17 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.jetbrains.kotlin.idea.util.application.executeOnPooledThread
+import org.vorpal.research.kex.plugin.TITLE
 import org.vorpal.research.kex.plugin.command.DockerRunCommand
 import org.vorpal.research.kex.plugin.gui.KexGraphPanel
 import org.vorpal.research.kex.plugin.gui.KexVertex
 import org.vorpal.research.kex.plugin.gui.KexWindow
 import org.vorpal.research.kex.plugin.net.ConnectionFailedException
+import org.vorpal.research.kex.plugin.net.ConnectionTimeoutException
 import org.vorpal.research.kex.plugin.net.findFreePort
 import org.vorpal.research.kex.plugin.net.getConnectedClient
 import org.vorpal.research.kex.plugin.settings.SettingsReader
+import org.vorpal.research.kex.plugin.util.notifyError
 
 class KexGUIRunner(private val project: Project) : AbstractKexRunner(project) {
 
@@ -29,10 +32,14 @@ class KexGUIRunner(private val project: Project) : AbstractKexRunner(project) {
     }
 
     private fun runGUI(target: String, backgroundable: CommandBackgroundable) {
+        val timeout = SettingsReader.guiConnectionTimeout
         val client = try {
-            getConnectedClient(port, SettingsReader.guiConnectionTimeout * 1000L) {
+            getConnectedClient(port, timeout * 1000L) {
                 !backgroundable.isRunning || it.receive() == "INIT"
             }
+        } catch (_: ConnectionTimeoutException) {
+            notifyError(project, TITLE, "Couldn't connect to GUI server within $timeout seconds")
+            return
         } catch (_: ConnectionFailedException) {
             return
         }
