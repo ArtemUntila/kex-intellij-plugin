@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 private val scope = CoroutineScope(Dispatchers.IO)
 
-fun ProgressIndicator.onCanceled(checkIntervalMillis: Long, block: () -> Unit) {
+fun ProgressIndicator.onCanceled(checkIntervalMillis: Long = 1000, block: () -> Unit) {
     scope.launch {
         while (isRunning) {
             try {
