@@ -26,6 +26,7 @@ class KexSettingsStateComponent : PersistentStateComponent<KexSettingsStateCompo
     data class KexSettingsState(
         var kexOutput: Boolean = false,
         var outputDir: String = "",
-        var dockerImage: String = "kex"
+        var dockerImage: String = "kex",
+        var guiConnectionTimeout: Int = 60
     )
 }

@@ -13,7 +13,7 @@ fun Module.getTestDirPath(default: String): String {
     return testSources.firstOrNull()?.path ?: "${guessModuleDir()!!.path}/$default"
 }
 
-fun Module.getClasspathList(): List<String> {
-    val classpathList = OrderEnumerator.orderEntries(this).recursively().pathsList.pathList
-    return classpathList.filter { !it.contains("jdk") }  // TODO: Find something more efficient
-}
+val Module.orderEnumerator: OrderEnumerator
+    get() = OrderEnumerator.orderEntries(this)
+
+fun Module.getClasspathList(): List<String> = orderEnumerator.withoutSdk().productionOnly().pathsList.pathList

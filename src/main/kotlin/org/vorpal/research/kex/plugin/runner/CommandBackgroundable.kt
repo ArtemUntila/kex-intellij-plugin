@@ -24,7 +24,7 @@ class CommandBackgroundable(
     override fun run(indicator: ProgressIndicator) {
         _isRunning = true
 
-        indicator.onCanceled(1000) {
+        indicator.onCanceled {
             cancelCommand?.let {
                 ProcessBuilder(it.args()).start().waitFor()
             }

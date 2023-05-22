@@ -12,7 +12,7 @@ fun findFreePort(): Int {
 
 fun getConnectedClient(
     port: Int, timeout: Long,
-    reconnectPause: Long = 2000,
+    reconnectPause: Long = 1000,
     stopPredicate: Predicate<Client> = Predicate { it.isConnected }
 ): Client {
     val client = Client(port = port)
@@ -31,8 +31,12 @@ fun getConnectedClient(
         timeElapsed = System.currentTimeMillis() - startTime
     }
 
-    if (status && client.isConnected) return client
-    else throw ConnectionFailedException()
+    when {
+        !status -> throw ConnectionTimeoutException()
+        !client.isConnected -> throw ConnectionFailedException()
+        else -> return client
+    }
 }
 
+class ConnectionTimeoutException : Exception()
 class ConnectionFailedException : Exception()

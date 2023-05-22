@@ -24,10 +24,17 @@ class KexSettingsConfigurable : BoundConfigurable("Kex") {
                     .horizontalAlign(HorizontalAlign.FILL)
                     .bindText(state::outputDir)
             }.enabledIf(cb.selected)
-            // TODO: group title
-            group {
-                row("Docker image:") {
+            group("Docker") {
+                row("Image:") {
                     textField().bindText(state::dockerImage)
+                }
+            }
+            group("GUI") {
+                row("Connection timeout:") {
+                    intTextField(IntRange(1, 1_000_000))
+                        .bindIntText(state::guiConnectionTimeout)
+                        .gap(RightGap.SMALL)
+                    label("seconds")
                 }
             }
         }
