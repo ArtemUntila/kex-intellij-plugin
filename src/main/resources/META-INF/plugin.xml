@@ -73,6 +73,8 @@
                                  displayName="Executor"/>
         <applicationService
                 serviceImplementation="org.vorpal.research.kex.plugin.settings.state.ExecutorOptionsStateComponent"/>
+
+        <notificationGroup displayType="TOOL_WINDOW" id="Kex" toolWindowId="Kex"/>
     </extensions>
 
     <!--TODO: Custom Icon
