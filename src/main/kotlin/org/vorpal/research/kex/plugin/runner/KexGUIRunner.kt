@@ -12,6 +12,7 @@ import org.vorpal.research.kex.plugin.gui.KexWindow
 import org.vorpal.research.kex.plugin.net.ConnectionFailedException
 import org.vorpal.research.kex.plugin.net.findFreePort
 import org.vorpal.research.kex.plugin.net.getConnectedClient
+import org.vorpal.research.kex.plugin.settings.SettingsReader
 
 class KexGUIRunner(private val project: Project) : AbstractKexRunner(project) {
 
@@ -29,8 +30,7 @@ class KexGUIRunner(private val project: Project) : AbstractKexRunner(project) {
 
     private fun runGUI(target: String, backgroundable: CommandBackgroundable) {
         val client = try {
-            // TODO: add timeout setting (in seconds)
-            getConnectedClient(port, 60000) {
+            getConnectedClient(port, SettingsReader.guiConnectionTimeout * 1000L) {
                 !backgroundable.isRunning || it.receive() == "INIT"
             }
         } catch (_: ConnectionFailedException) {

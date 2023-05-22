@@ -12,7 +12,7 @@ fun findFreePort(): Int {
 
 fun getConnectedClient(
     port: Int, timeout: Long,
-    reconnectPause: Long = 2000,
+    reconnectPause: Long = 1000,
     stopPredicate: Predicate<Client> = Predicate { it.isConnected }
 ): Client {
     val client = Client(port = port)
