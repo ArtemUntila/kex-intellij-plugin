@@ -31,7 +31,10 @@ class KexSettingsConfigurable : BoundConfigurable("Kex") {
             }
             group("GUI") {
                 row("Connection timeout:") {
-                    intTextField().bindIntText(state::guiConnectionTimeout)
+                    intTextField(IntRange(1, 1_000_000))
+                        .bindIntText(state::guiConnectionTimeout)
+                        .gap(RightGap.SMALL)
+                    label("seconds")
                 }
             }
         }

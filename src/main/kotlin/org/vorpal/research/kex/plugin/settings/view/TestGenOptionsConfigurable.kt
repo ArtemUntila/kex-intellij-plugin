@@ -37,7 +37,10 @@ class TestGenOptionsConfigurable : BoundConfigurable("Test Generation") {
                     checkBox("Log JUnit").bindSelected(state::logJUnit)
                 }
                 row("Test timeout:") {
-                    intTextField().bindIntText(state::testTimeout)
+                    intTextField(IntRange(1, 1_000_000))
+                        .bindIntText(state::testTimeout)
+                        .gap(RightGap.SMALL)
+                    label("seconds")
                 }
                 row {
                     checkBox("Surround in try-catch").bindSelected(state::surroundInTryCatch)
