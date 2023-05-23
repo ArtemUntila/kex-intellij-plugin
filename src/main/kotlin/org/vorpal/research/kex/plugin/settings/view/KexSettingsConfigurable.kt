@@ -23,11 +23,13 @@ class KexSettingsConfigurable : BoundConfigurable("Kex") {
                     .align(AlignX.FILL)
                     .bindText(state::outputDir)
             }.enabledIf(cb.selected)
+
             group("Docker") {
                 row("Image:") {
                     textField().bindText(state::dockerImage)
                 }
             }
+
             group("GUI") {
                 row("Connection timeout:") {
                     intTextField(IntRange(1, 1_000_000))
