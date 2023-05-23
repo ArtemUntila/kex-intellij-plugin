@@ -15,7 +15,6 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
-    maven("https://jitpack.io")
 }
 
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
@@ -52,13 +51,13 @@ tasks {
     }
 }
 
+javafx {
+    version = "20"
+    modules("javafx.controls", "javafx.swing")
+}
+
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
-    implementation("com.github.Artyom-IWT:JavaFXSmartGraph:$smartgraphVersion")
-}
-
-javafx {
-    version = "19"
-    modules("javafx.controls", "javafx.swing")
+    implementation("com.brunomnsilva:smartgraph:$smartgraphVersion")
 }
