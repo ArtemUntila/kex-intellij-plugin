@@ -8,9 +8,8 @@ import com.intellij.openapi.actionSystem.DefaultActionGroup
 class ProjectViewActionGroup : DefaultActionGroup() {
 
     override fun update(e: AnActionEvent) {
-        val virtualFile = e.getData(CommonDataKeys.VIRTUAL_FILE) ?: return
-        e.presentation.isEnabledAndVisible =
-            (virtualFile.name.endsWith(".java") || virtualFile.name.endsWith(".kt"))
+        val fileName = e.getData(CommonDataKeys.VIRTUAL_FILE)?.name ?: return
+        e.presentation.isEnabledAndVisible = (fileName.endsWith(".java") || fileName.endsWith(".kt"))
     }
 
     override fun getActionUpdateThread(): ActionUpdateThread {

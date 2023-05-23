@@ -15,6 +15,7 @@ abstract class AbstractKexRunner(private val project: Project) {
 
     private val projectTaskManager = ProjectTaskManager.getInstance(project)
     private val toolWindowHelper = ToolWindowHelper(project, TITLE)
+    private val progressManager = ProgressManager.getInstance()
 
     fun buildAndRun(module: Module, target: String, attachConsoleView: Boolean) {
         projectTaskManager.build(module).onSuccess { buildResult ->
@@ -28,7 +29,7 @@ abstract class AbstractKexRunner(private val project: Project) {
                 else null
 
             val backgroundable = CommandBackgroundable(project, TITLE, runCommand, cancelCommand, consoleView)
-            ProgressManager.getInstance().run(backgroundable)
+            progressManager.run(backgroundable)
 
             postRun(target, backgroundable)
         }
@@ -36,5 +37,5 @@ abstract class AbstractKexRunner(private val project: Project) {
 
     protected abstract fun dockerRunCommand(commandHelper: CommandHelper): DockerRunCommand
 
-    protected open fun postRun(target: String, backgroundable: CommandBackgroundable) { }
+    protected open fun postRun(target: String, backgroundable: CommandBackgroundable) {}
 }
