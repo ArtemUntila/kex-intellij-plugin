@@ -1,5 +1,6 @@
 package org.vorpal.research.kex.plugin.actions
 
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.actionSystem.DefaultActionGroup
@@ -18,5 +19,9 @@ class EditorActionGroup : DefaultActionGroup() {
 
         e.presentation.isEnabledAndVisible = element.isIdentifier &&
                 (parent.isJavaOrKotlinClass || parent.isJavaOrKotlinMethod)
+    }
+
+    override fun getActionUpdateThread(): ActionUpdateThread {
+        return ActionUpdateThread.BGT
     }
 }
