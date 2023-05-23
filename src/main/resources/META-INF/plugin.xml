@@ -88,7 +88,7 @@
         <group id="ProjectViewActionGroup" class="org.vorpal.research.kex.plugin.actions.ProjectViewActionGroup"
                popup="true"
                icon="/icons/kex16.svg" text="Kex">
-            <add-to-group group-id="ProjectViewPopupMenu"/>
+            <add-to-group group-id="ProjectViewCompileGroup"/>
             <action id="Kex.Actions.ProjectViewAction" class="org.vorpal.research.kex.plugin.actions.ProjectViewAction"
                     text="Generate Tests"/>
         </group>
@@ -96,7 +96,7 @@
         <group id="EditorActionGroup" class="org.vorpal.research.kex.plugin.actions.EditorActionGroup"
                popup="true"
                icon="/icons/kex16.svg" text="Kex">
-            <add-to-group group-id="EditorPopupMenu"/>
+            <add-to-group group-id="EditorLangPopupMenu" anchor="after" relative-to-action="Generate"/>
             <action id="Kex.Actions.EditorAction" class="org.vorpal.research.kex.plugin.actions.EditorAction"
                     text="Generate Tests"/>
             <action id="Kex.Actions.EditorMethodGraphAction"
