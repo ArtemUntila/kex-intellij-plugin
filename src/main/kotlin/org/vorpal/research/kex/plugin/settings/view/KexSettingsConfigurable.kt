@@ -28,6 +28,9 @@ class KexSettingsConfigurable : BoundConfigurable("Kex") {
                 row("Image:") {
                     textField().bindText(state::dockerImage)
                 }
+                row {
+                    checkBox("Remove container").bindSelected(state::dockerRemove)
+                }
             }
 
             group("GUI") {

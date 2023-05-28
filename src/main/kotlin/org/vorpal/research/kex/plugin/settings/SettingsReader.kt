@@ -38,6 +38,9 @@ object SettingsReader {
     val dockerImage: String
         get() = kexSettingsState.dockerImage
 
+    val dockerRemove: Boolean
+        get() = kexSettingsState.dockerRemove
+
     val guiConnectionTimeout: Int
         get() = kexSettingsState.guiConnectionTimeout
 

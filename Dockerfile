@@ -7,7 +7,7 @@ RUN pacman -Sy --noconfirm \
     maven
 
 # Clone Kex
-RUN git clone -b gui-strategy https://github.com/Artyom-IWT/kex.git
+RUN git clone -b gui-strategy https://github.com/ArtemUntila/kex.git
 
 # Build Kex
 WORKDIR /kex
