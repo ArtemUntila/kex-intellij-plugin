@@ -12,10 +12,10 @@ class KexOptionsConfigurable : BoundConfigurable("Kex") {
     override fun createPanel(): DialogPanel {
         return panel {
             row("Runtime dependencies path:") {
-                textField().bindText(state::runtimeDepsPath)
+                textField().bindText(state::runtimeDepsPath).align(AlignX.FILL)
             }
             row("Libraries path:") {
-                textField().bindText(state::libPath)
+                textField().bindText(state::libPath).align(AlignX.FILL)
             }
             row("Runtime version:") {
                 textField().bindText(state::rtVersion)

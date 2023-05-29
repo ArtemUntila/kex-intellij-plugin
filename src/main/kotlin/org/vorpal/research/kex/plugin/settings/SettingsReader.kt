@@ -38,6 +38,9 @@ object SettingsReader {
     val dockerImage: String
         get() = kexSettingsState.dockerImage
 
+    val dockerRemove: Boolean
+        get() = kexSettingsState.dockerRemove
+
     val guiConnectionTimeout: Int
         get() = kexSettingsState.guiConnectionTimeout
 
@@ -47,6 +50,7 @@ object SettingsReader {
             .mapValues { "${it.value}" }
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun getPropertyValueMap(instance: Any): Map<String, Any> {
         val properties = instance::class.memberProperties.map { it as KProperty1<Any, Any> }
         return properties.associateBy({ it.name }, { it.get(instance) })

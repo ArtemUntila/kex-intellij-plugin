@@ -5,7 +5,6 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiMethod
 import com.intellij.psi.PsiType
 import com.intellij.psi.util.elementType
-import org.jetbrains.kotlin.idea.util.toJvmFqName
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.psi.KtClass
 import org.jetbrains.kotlin.psi.KtFunction
@@ -32,17 +31,15 @@ val PsiMethod.targetName: String?
         val className = containingClass?.fqName?.toJvmFqName ?: return null
         val returnTypeName = returnType?.fqName?.toJvmFqName ?: return null
         val parameterTypeNames = parameterList.parameters.joinToString(",") { it.type.fqName.toJvmFqName }
-        return formatFunTargetName(className, name, returnTypeName, parameterTypeNames)
+
+        return formatMethodTargetName(className, name, returnTypeName, parameterTypeNames)
     }
 
+// Kt Element -> UAST Element -> Java Psi Element
 val KtFunction.targetName: String?
-    get() {
-        // Kt Element -> UAST Element -> Java Psi Element
-        val psiMethod = toUElement().getAsJavaPsiElement(PsiMethod::class.java)
-        return psiMethod?.targetName
-    }
+    get() = toUElement().getAsJavaPsiElement(PsiMethod::class.java)?.targetName
 
-private fun formatFunTargetName(
+private fun formatMethodTargetName(
     className: String,
     funName: String,
     returnTypeName: String,

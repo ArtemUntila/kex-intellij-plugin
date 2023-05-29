@@ -19,7 +19,7 @@ class TestGenOptionsConfigurable : BoundConfigurable("Test Generation") {
             }
             rowsRange {
                 row("Tests directory:") {
-                    textField().bindText(state::testsDir)
+                    textField().bindText(state::testsDir).align(AlignX.FILL)
                 }
                 row("Access level:") {
                     comboBox(listOf("private", "protected", "package", "public")).bindItem(state::accessLevel)

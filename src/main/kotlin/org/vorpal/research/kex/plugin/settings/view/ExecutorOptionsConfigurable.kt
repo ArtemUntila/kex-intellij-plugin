@@ -12,22 +12,22 @@ class ExecutorOptionsConfigurable : BoundConfigurable("Executor") {
     override fun createPanel(): DialogPanel {
         return panel {
             row("Executor path:") {
-                textField().columns(COLUMNS_LARGE).bindText(state::executorPath)
+                textField().bindText(state::executorPath).align(AlignX.FILL)
             }
             row("Executor config path:") {
-                textField().bindText(state::executorConfigPath)
+                textField().bindText(state::executorConfigPath).align(AlignX.FILL)
             }
             row("Executor policy path:") {
-                textField().bindText(state::executorPolicyPath)
+                textField().bindText(state::executorPolicyPath).align(AlignX.FILL)
             }
             row("Number of workers:") {
                 intTextField(IntRange(1, 32)).bindIntText(state::numberOfWorkers)
             }
             row("Master JVM params:") {
-                textField().bindText(state::masterJvmParams)
+                textField().bindText(state::masterJvmParams).align(AlignX.FILL)
             }
             row("Worker JVM params:") {
-                textField().bindText(state::workerJvmParams)
+                textField().bindText(state::workerJvmParams).align(AlignX.FILL)
             }
         }
     }

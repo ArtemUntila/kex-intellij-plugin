@@ -6,6 +6,7 @@ import org.vorpal.research.kex.plugin.command.DockerRunCommand
 import org.vorpal.research.kex.plugin.command.KexCommand
 import org.vorpal.research.kex.plugin.settings.SettingsReader
 import org.vorpal.research.kex.plugin.util.Section
+import kotlin.random.Random
 
 class CommandHelper(
     classpath: Iterable<String>,
@@ -14,7 +15,6 @@ class CommandHelper(
 ) {
 
     private companion object {
-        var id = 0
         val isWindows = System.getProperty("os.name").startsWith("Windows")
     }
 
@@ -39,9 +39,10 @@ class CommandHelper(
     private fun defaultDockerRunCommand(): DockerRunCommand {
         val dockerImage = SettingsReader.dockerImage
         val dockerRunCommand = DockerRunCommand(dockerImage)
-            .remove()
-            .name("$dockerImage-${id++}")
+            .name(generateContainerName())
             .addVolume(testDir, "$KEX_OUTPUT/${SettingsReader.testsDir}")
+
+        if (SettingsReader.dockerRemove) dockerRunCommand.remove()
 
         SettingsReader.kexOutputDir?.let {
             dockerRunCommand.addVolume(it, KEX_OUTPUT)
@@ -60,6 +61,10 @@ class CommandHelper(
             .addOptions(SettingsReader.concolicOptions)
             .addOptions(SettingsReader.testGenOptions)
             .addOptions(SettingsReader.executorOptions)
+    }
+
+    private fun generateContainerName(): String {
+        return Integer.toHexString(Random.nextInt())
     }
 
     private fun localToContainerPath(localPath: String): String {

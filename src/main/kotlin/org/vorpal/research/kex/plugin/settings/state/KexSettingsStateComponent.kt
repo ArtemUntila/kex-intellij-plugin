@@ -26,7 +26,8 @@ class KexSettingsStateComponent : PersistentStateComponent<KexSettingsStateCompo
     data class KexSettingsState(
         var kexOutput: Boolean = false,
         var outputDir: String = "",
-        var dockerImage: String = "kex",
+        var dockerImage: String = "artemuntila/kex-plugin",
+        var dockerRemove: Boolean = true,
         var guiConnectionTimeout: Int = 60
     )
 }

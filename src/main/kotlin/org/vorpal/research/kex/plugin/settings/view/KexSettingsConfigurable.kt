@@ -5,7 +5,6 @@ import com.intellij.openapi.options.BoundConfigurable
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.ui.components.JBCheckBox
 import com.intellij.ui.dsl.builder.*
-import com.intellij.ui.dsl.gridLayout.HorizontalAlign
 import org.vorpal.research.kex.plugin.settings.state.KexSettingsStateComponent
 
 class KexSettingsConfigurable : BoundConfigurable("Kex") {
@@ -21,14 +20,19 @@ class KexSettingsConfigurable : BoundConfigurable("Kex") {
             row("Output directory:") {
                 val fcd = FileChooserDescriptorFactory.createSingleFolderDescriptor()
                 textFieldWithBrowseButton("Select Output Directory", null, fcd)
-                    .horizontalAlign(HorizontalAlign.FILL)
+                    .align(AlignX.FILL)
                     .bindText(state::outputDir)
             }.enabledIf(cb.selected)
+
             group("Docker") {
                 row("Image:") {
                     textField().bindText(state::dockerImage)
                 }
+                row {
+                    checkBox("Remove container").bindSelected(state::dockerRemove)
+                }
             }
+
             group("GUI") {
                 row("Connection timeout:") {
                     intTextField(IntRange(1, 1_000_000))
