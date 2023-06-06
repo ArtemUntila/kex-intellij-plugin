@@ -8,7 +8,7 @@
     <name>Kex</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor url="https://github.com/vorpal-research">Vorpal &amp; Artem Untila</vendor>
+    <vendor url="https://github.com/ArtemUntila">Artem Untila</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
@@ -19,11 +19,11 @@
     <ul>
         <li>Generate tests for class from Project View.</li>
         <li>Generate tests for class or method from Editor.</li>
-        <li>Visualize method CFG and guide Kex interactively (advanced usage).</li>
+        <li>Visualize method <a href="https://en.wikipedia.org/wiki/Control-flow_graph">CFG</a> and guide Kex interactively (advanced usage).</li>
     </ul>
     Constraints:
     <ul>
-        <li>To run Kex, Docker must be running.</li>
+        <li>To run Kex, <a href="https://www.docker.com/">Docker</a> must be running.</li>
         <li>Due to the specifics of Kex, only JDK 8 is supported.</li>
     </ul>
     To configure, open <b>Settings | Tools | Kex</b>.
