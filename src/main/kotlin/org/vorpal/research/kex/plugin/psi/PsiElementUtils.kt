@@ -26,17 +26,20 @@ val PsiClass.fqName: FqName?
 val PsiType.fqName: FqName
     get() = FqName(canonicalText)
 
-val PsiMethod.targetName: String?
+val PsiType.targetName: String
+    get() = fqName.toJvmFqName
+
+private val PsiMethod.targetName: String?
     get() {
-        val className = containingClass?.fqName?.toJvmFqName ?: return null
-        val returnTypeName = returnType?.fqName?.toJvmFqName ?: return null
-        val parameterTypeNames = parameterList.parameters.joinToString(",") { it.type.fqName.toJvmFqName }
+        val className = containingClass?.targetName ?: return null
+        val returnTypeName = returnType?.targetName ?: return null
+        val parameterTypeNames = parameterList.parameters.joinToString(",") { it.type.targetName }
 
         return formatMethodTargetName(className, name, returnTypeName, parameterTypeNames)
     }
 
 // Kt Element -> UAST Element -> Java Psi Element
-val KtFunction.targetName: String?
+private val KtFunction.targetName: String?
     get() = toUElement().getAsJavaPsiElement(PsiMethod::class.java)?.targetName
 
 private fun formatMethodTargetName(
@@ -54,4 +57,4 @@ val PsiElement.isJavaOrKotlinClass: Boolean
     get() = this is PsiClass || this is KtClass
 
 val PsiElement.isJavaOrKotlinMethod: Boolean
-    get() = this is PsiMethod || this is KtFunction
+    get() = (this is PsiMethod && !isConstructor) || this is KtFunction
