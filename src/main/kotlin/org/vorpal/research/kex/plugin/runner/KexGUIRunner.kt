@@ -44,16 +44,16 @@ class KexGUIRunner(private val project: Project) : AbstractKexRunner(project) {
             return
         }
 
-        val graphPanel = KexGraphPanel()
-        graphPanel.onPathVertexReverse { pathVertex ->
-            client.send(Json.encodeToString(pathVertex))
-        }
-        graphPanel.onNext {
-            client.send("NEXT")
+        val graphPanel = KexGraphPanel().apply {
+            onPathVertexReverse { pathVertex ->
+                client.send(Json.encodeToString(pathVertex))
+            }
+            onNext {
+                client.send("NEXT")
+            }
         }
 
-        val window = KexWindow(project, target, graphPanel)
-        window.onClosed {
+        KexWindow(project, target, graphPanel).onClosed {
             client.close()
         }
 

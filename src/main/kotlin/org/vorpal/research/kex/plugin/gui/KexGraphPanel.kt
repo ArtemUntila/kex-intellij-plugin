@@ -9,7 +9,7 @@ import java.util.function.Consumer
 class KexGraphPanel(width: Double = 1024.0, height: Double = 768.0) : JFXComponentWrapper() {
 
     private companion object {
-        val classLoader = Companion::class.java.classLoader
+        val classLoader: ClassLoader = Companion::class.java.classLoader
         val CSS_FILE = classLoader.getResource("smartgraph/smartgraph.css")?.toURI()
         val PROPERTIES = SmartGraphProperties(classLoader.getResourceAsStream("smartgraph/smartgraph.properties"))
     }
@@ -32,21 +32,24 @@ class KexGraphPanel(width: Double = 1024.0, height: Double = 768.0) : JFXCompone
     }
 
     private fun initControls() {
-        controlPane.nextButton.disableProperty().bindBidirectional(controlsDisabled)
-        controlPane.continueCheckBox.selectedProperty().bindBidirectional(continueSelected)
-
-        controlPane.nextButton.setOnAction {
-            disableControls()
-            nextAction?.run()
+        with(controlPane) {
+            with(nextButton) {
+                disableProperty().bindBidirectional(controlsDisabled)
+                setOnAction {
+                    disableControls()
+                    nextAction?.run()
+                }
+            }
+            continueCheckBox.selectedProperty().bindBidirectional(continueSelected)
         }
-
-        graphView.showVertexContextMenuIf {
-            !controlsDisabled.value && (it.underlyingVertex.element().type == KexVertexType.PATH)
-        }
-
-        graphView.addContextMenuItem("reverse") { smartGraphVertex ->
-            disableControls()
-            reverseAction?.accept(smartGraphVertex.underlyingVertex.element())
+        with(graphView) {
+            showVertexContextMenuIf {
+                !controlsDisabled.value && (it.underlyingVertex.element().type == KexVertexType.PATH)
+            }
+            addVertexContextMenuItem("reverse") { smartGraphVertex ->
+                disableControls()
+                reverseAction?.accept(smartGraphVertex.underlyingVertex.element())
+            }
         }
     }
 

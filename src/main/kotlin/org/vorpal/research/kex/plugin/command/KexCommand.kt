@@ -11,18 +11,16 @@ class KexCommand(
 
     private val optionValueMap: MutableMap<Option, String> = mutableMapOf()
 
-    fun addOption(option: Option, value: String): KexCommand {
+    fun addOption(option: Option, value: String) = apply {
         optionValueMap[option] = value
-        return this
     }
 
-    fun addOption(section: Section, name: String, value: String): KexCommand {
-        return this.addOption(Option(section, name), value)
+    fun addOption(section: Section, name: String, value: String) = apply {
+        addOption(Option(section, name), value)
     }
 
-    fun addOptions(options: Map<Option, String>): KexCommand {
+    fun addOptions(options: Map<Option, String>) = apply {
         optionValueMap.putAll(options)
-        return this
     }
 
     override fun args(): List<String> {

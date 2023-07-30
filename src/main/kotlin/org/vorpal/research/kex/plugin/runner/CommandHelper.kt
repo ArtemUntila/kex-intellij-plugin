@@ -18,15 +18,9 @@ class CommandHelper(
         val isWindows = System.getProperty("os.name").startsWith("Windows")
     }
 
-    private val classpathMap: Map<String, String>
-    private val dockerRunCommand: DockerRunCommand
-    private val kexCommand: KexCommand
-
-    init {
-        classpathMap = classpath.associateWith { localToContainerPath(it) }
-        dockerRunCommand = defaultDockerRunCommand()
-        kexCommand = defaultKexCommand()
-    }
+    private val classpathMap: Map<String, String> = classpath.associateWith { localToContainerPath(it) }
+    private val dockerRunCommand: DockerRunCommand = defaultDockerRunCommand()
+    private val kexCommand: KexCommand = defaultKexCommand()
 
     fun default(): DockerRunCommand = dockerRunCommand.containerCommand(kexCommand)
 
@@ -37,8 +31,7 @@ class CommandHelper(
     }
 
     private fun defaultDockerRunCommand(): DockerRunCommand {
-        val dockerImage = SettingsReader.dockerImage
-        val dockerRunCommand = DockerRunCommand(dockerImage)
+        val dockerRunCommand = DockerRunCommand(SettingsReader.dockerImage)
             .name(generateContainerName())
             .addVolume(testDir, "$KEX_OUTPUT/${SettingsReader.testsDir}")
 
