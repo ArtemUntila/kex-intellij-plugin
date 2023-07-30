@@ -1,9 +1,11 @@
 package org.vorpal.research.kex.plugin.psi
 
+import com.intellij.lang.java.JavaLanguage
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiJavaFile
 import org.jetbrains.kotlin.fileClasses.javaFileFacadeFqName
 import org.jetbrains.kotlin.idea.KotlinIconProvider
+import org.jetbrains.kotlin.idea.KotlinLanguage
 import org.jetbrains.kotlin.idea.core.getFqNameByDirectory
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.psi.KtFile
@@ -15,10 +17,10 @@ val PsiFile.fileClassFqName: FqName?
         else -> null
     }
 
-val PsiJavaFile.fileClassFqName: FqName
+private val PsiJavaFile.fileClassFqName: FqName
     get() = fileClassFqName(".java")
 
-val KtFile.fileClassFqName: FqName
+private val KtFile.fileClassFqName: FqName
     get() =
         if (isSingleClassFile) fileClassFqName(".kt")
         else javaFileFacadeFqName
@@ -33,3 +35,6 @@ private fun PsiFile.fileClassFqName(extensionSuffix: String): FqName {
     return if (packageName.isEmpty()) FqName(className)
     else FqName("$packageName.$className")
 }
+
+val PsiFile.isJavaOrKotlinSource: Boolean
+    get() = language is JavaLanguage || language is KotlinLanguage
