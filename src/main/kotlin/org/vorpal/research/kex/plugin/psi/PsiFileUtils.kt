@@ -7,6 +7,7 @@ import org.jetbrains.kotlin.fileClasses.javaFileFacadeFqName
 import org.jetbrains.kotlin.idea.KotlinIconProvider
 import org.jetbrains.kotlin.idea.KotlinLanguage
 import org.jetbrains.kotlin.idea.core.getFqNameByDirectory
+import org.jetbrains.kotlin.idea.util.sourceRoot
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.psi.KtFile
 
@@ -37,4 +38,4 @@ private fun PsiFile.fileClassFqName(extensionSuffix: String): FqName {
 }
 
 val PsiFile.isJavaOrKotlinSource: Boolean
-    get() = language is JavaLanguage || language is KotlinLanguage
+    get() = sourceRoot != null && (language is JavaLanguage || language is KotlinLanguage)
