@@ -1,4 +1,4 @@
-package org.vorpal.research.kex.plugin.actions
+package org.vorpal.research.kex.plugin.actions.editor
 
 import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnActionEvent
