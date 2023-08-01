@@ -7,13 +7,17 @@ import com.intellij.openapi.actionSystem.DefaultActionGroup
 import org.vorpal.research.kex.plugin.psi.isIdentifier
 import org.vorpal.research.kex.plugin.psi.isJavaOrKotlinClass
 import org.vorpal.research.kex.plugin.psi.isJavaOrKotlinMethod
+import org.vorpal.research.kex.plugin.psi.isJavaOrKotlinSource
 
 class EditorActionGroup : DefaultActionGroup() {
 
     override fun update(e: AnActionEvent) {
-        val file = e.getData(CommonDataKeys.PSI_FILE) ?: return
-        val editor = e.getData(CommonDataKeys.EDITOR) ?: return
+        e.presentation.isEnabledAndVisible = false
 
+        val file = e.getData(CommonDataKeys.PSI_FILE)
+        if (file == null || !file.isJavaOrKotlinSource) return
+
+        val editor = e.getData(CommonDataKeys.EDITOR) ?: return
         val element = file.viewProvider.findElementAt(editor.caretModel.offset) ?: return
         val parent = element.parent ?: return
 
