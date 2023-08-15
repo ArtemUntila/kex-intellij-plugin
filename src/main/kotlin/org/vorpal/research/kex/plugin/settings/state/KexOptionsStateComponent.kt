@@ -33,6 +33,8 @@ class KexOptionsStateComponent : PersistentStateComponent<KexOptionsStateCompone
 //        var outputDir: String = "temp/",
         var useJavaRuntime: Boolean = true,
         var useKexRuntime: Boolean = true,
+        var computeCoverage: Boolean = true,
+        var computeSaturationCoverage: Boolean = false,
         var printDetailedCoverage: Boolean = true,
         var useReflectionInfo: Boolean = false
     )

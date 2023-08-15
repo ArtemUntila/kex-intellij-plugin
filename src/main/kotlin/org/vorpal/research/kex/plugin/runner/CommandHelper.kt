@@ -26,7 +26,7 @@ class CommandHelper(
 
     fun gui(port: Int): DockerRunCommand {
         dockerRunCommand.addPort(port, KEX_PORT)
-        kexCommand.addOption(Section.concolic, "searchStrategy", "${SettingsReader.searchStrategy}-gui")
+        kexCommand.addOption(Section.gui, "enabled", "true")
         return default()
     }
 
@@ -51,8 +51,8 @@ class CommandHelper(
     private fun defaultKexCommand(): KexCommand {
         return KexCommand(classpathMap.values, target, KEX_OUTPUT)
             .addOptions(SettingsReader.kexOptions)
-            .addOptions(SettingsReader.concolicOptions)
             .addOptions(SettingsReader.testGenOptions)
+            .addOptions(SettingsReader.concolicOptions)
             .addOptions(SettingsReader.executorOptions)
     }
 
