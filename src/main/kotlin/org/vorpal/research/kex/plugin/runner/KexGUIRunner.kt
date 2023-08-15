@@ -1,7 +1,7 @@
 package org.vorpal.research.kex.plugin.runner
 
 import com.intellij.openapi.project.Project
-import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.decodeFromString  // Do not remove this import
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.jetbrains.kotlin.idea.util.application.executeOnPooledThread
