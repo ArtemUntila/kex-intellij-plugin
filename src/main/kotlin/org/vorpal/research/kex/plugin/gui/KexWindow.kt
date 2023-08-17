@@ -16,10 +16,11 @@ class KexWindow(project: Project, title: String, content: JComponentWrapper) {
     private val frameWrapper = FrameWrapper(project = project, title = title, component = content.component)
 
     init {
-        val frame = frameWrapper.getFrame()
-        frame.minimumSize = minimumSize
-        frame.size = content.size
-        frame.setLocationRelativeTo(null)  // center
+        with(frameWrapper.getFrame()) {
+            minimumSize = Companion.minimumSize
+            size = content.size
+            setLocationRelativeTo(null)  // center
+        }
         frameWrapper.show(false)
     }
 

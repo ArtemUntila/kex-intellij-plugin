@@ -39,6 +39,12 @@ class KexOptionsConfigurable : BoundConfigurable("Kex") {
                 checkBox("Use Kex runtime").bindSelected(state::useKexRuntime)
             }
             row {
+                checkBox("Compute coverage").bindSelected(state::computeCoverage)
+            }
+            row {
+                checkBox("Compute saturation coverage").bindSelected(state::computeSaturationCoverage)
+            }
+            row {
                 checkBox("Print detailed coverage").bindSelected(state::printDetailedCoverage)
             }
             row {

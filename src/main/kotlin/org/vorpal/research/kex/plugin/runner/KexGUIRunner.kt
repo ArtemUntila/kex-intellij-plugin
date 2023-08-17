@@ -1,7 +1,7 @@
 package org.vorpal.research.kex.plugin.runner
 
 import com.intellij.openapi.project.Project
-import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.decodeFromString  // Do not remove this import
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.jetbrains.kotlin.idea.util.application.executeOnPooledThread
@@ -44,16 +44,16 @@ class KexGUIRunner(private val project: Project) : AbstractKexRunner(project) {
             return
         }
 
-        val graphPanel = KexGraphPanel()
-        graphPanel.onPathVertexReverse { pathVertex ->
-            client.send(Json.encodeToString(pathVertex))
-        }
-        graphPanel.onNext {
-            client.send("NEXT")
+        val graphPanel = KexGraphPanel().apply {
+            onPathVertexReverse { pathVertex ->
+                client.send(Json.encodeToString(pathVertex))
+            }
+            onNext {
+                client.send("NEXT")
+            }
         }
 
-        val window = KexWindow(project, target, graphPanel)
-        window.onClosed {
+        KexWindow(project, target, graphPanel).onClosed {
             client.close()
         }
 

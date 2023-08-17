@@ -1,6 +1,5 @@
 package org.vorpal.research.kex.plugin.settings.view
 
-import com.intellij.codeInspection.javaDoc.JavadocUIUtil.bindItem
 import com.intellij.openapi.options.BoundConfigurable
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.ui.components.JBCheckBox
@@ -22,7 +21,8 @@ class TestGenOptionsConfigurable : BoundConfigurable("Test Generation") {
                     textField().bindText(state::testsDir).align(AlignX.FILL)
                 }
                 row("Access level:") {
-                    comboBox(listOf("private", "protected", "package", "public")).bindItem(state::accessLevel)
+                    comboBox(listOf("private", "protected", "package", "public"))
+                        .bindItem(state::accessLevel.toNullableProperty())
                 }
                 buttonsGroup {
                     row("Test case language:") {

@@ -32,9 +32,6 @@ object SettingsReader {
     val testsDir: String
         get() = testGenOptionsState.testsDir
 
-    val searchStrategy: String
-        get() = concolicOptionsState.searchStrategy
-
     val dockerImage: String
         get() = kexSettingsState.dockerImage
 

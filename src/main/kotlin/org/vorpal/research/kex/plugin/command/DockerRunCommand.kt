@@ -11,29 +11,24 @@ class DockerRunCommand(private val image: String) : Command {
     val containerName: String?
         get() = name
 
-    fun remove(): DockerRunCommand {
+    fun remove() = apply {
         remove = true
-        return this
     }
 
-    fun name(name: String): DockerRunCommand {
+    fun name(name: String) = apply {
         this.name = name
-        return this
     }
 
-    fun addPort(localPort: Int, containerPort: Int): DockerRunCommand {
+    fun addPort(localPort: Int, containerPort: Int) = apply {
         ports[localPort] = containerPort
-        return this
     }
 
-    fun addVolume(localPath: String, containerPath: String): DockerRunCommand {
+    fun addVolume(localPath: String, containerPath: String) = apply {
         volumes[localPath] = containerPath
-        return this
     }
 
-    fun containerCommand(command: Command): DockerRunCommand {
+    fun containerCommand(command: Command) = apply {
         containerCommand = command
-        return this
     }
 
     override fun args(): List<String> {

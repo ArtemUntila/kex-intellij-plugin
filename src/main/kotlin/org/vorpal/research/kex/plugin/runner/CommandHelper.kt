@@ -18,27 +18,20 @@ class CommandHelper(
         val isWindows = System.getProperty("os.name").startsWith("Windows")
     }
 
-    private val classpathMap: Map<String, String>
-    private val dockerRunCommand: DockerRunCommand
-    private val kexCommand: KexCommand
-
-    init {
-        classpathMap = classpath.associateWith { localToContainerPath(it) }
-        dockerRunCommand = defaultDockerRunCommand()
-        kexCommand = defaultKexCommand()
-    }
+    private val classpathMap: Map<String, String> = classpath.associateWith { localToContainerPath(it) }
+    private val dockerRunCommand: DockerRunCommand = defaultDockerRunCommand()
+    private val kexCommand: KexCommand = defaultKexCommand()
 
     fun default(): DockerRunCommand = dockerRunCommand.containerCommand(kexCommand)
 
     fun gui(port: Int): DockerRunCommand {
         dockerRunCommand.addPort(port, KEX_PORT)
-        kexCommand.addOption(Section.concolic, "searchStrategy", "${SettingsReader.searchStrategy}-gui")
+        kexCommand.addOption(Section.gui, "enabled", "true")
         return default()
     }
 
     private fun defaultDockerRunCommand(): DockerRunCommand {
-        val dockerImage = SettingsReader.dockerImage
-        val dockerRunCommand = DockerRunCommand(dockerImage)
+        val dockerRunCommand = DockerRunCommand(SettingsReader.dockerImage)
             .name(generateContainerName())
             .addVolume(testDir, "$KEX_OUTPUT/${SettingsReader.testsDir}")
 
@@ -58,8 +51,8 @@ class CommandHelper(
     private fun defaultKexCommand(): KexCommand {
         return KexCommand(classpathMap.values, target, KEX_OUTPUT)
             .addOptions(SettingsReader.kexOptions)
-            .addOptions(SettingsReader.concolicOptions)
             .addOptions(SettingsReader.testGenOptions)
+            .addOptions(SettingsReader.concolicOptions)
             .addOptions(SettingsReader.executorOptions)
     }
 

@@ -15,17 +15,20 @@
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
     <a href="https://github.com/vorpal-research/kex">Kex</a> is an automatic white-box unit test generation tool for Java and Kotlin.
+
     The following features are available:
     <ul>
         <li>Generate tests for class from Project View.</li>
         <li>Generate tests for class or method from Editor.</li>
         <li>Visualize method <a href="https://en.wikipedia.org/wiki/Control-flow_graph">CFG</a> and guide Kex interactively (advanced usage).</li>
     </ul>
+
     Constraints:
     <ul>
         <li>To run Kex, <a href="https://www.docker.com/">Docker</a> must be running.</li>
-        <li>Due to the specifics of Kex, only JDK 8 is supported.</li>
+        <li>Due to the specifics of Kex, only JDK 11 is supported.</li>
     </ul>
+
     To configure, open <b>Settings | Tools | Kex</b>.
   ]]></description>
 
@@ -88,22 +91,22 @@
     -->
 
     <actions>
-        <group id="ProjectViewActionGroup" class="org.vorpal.research.kex.plugin.actions.ProjectViewActionGroup"
+        <group id="ProjectViewActionGroup" class="org.vorpal.research.kex.plugin.actions.projectView.ProjectViewActionGroup"
                popup="true"
                icon="/icons/kex16.svg" text="Kex">
             <add-to-group group-id="ProjectViewCompileGroup"/>
-            <action id="Kex.Actions.ProjectViewAction" class="org.vorpal.research.kex.plugin.actions.ProjectViewAction"
+            <action id="Kex.Actions.ProjectViewAction" class="org.vorpal.research.kex.plugin.actions.projectView.ProjectViewAction"
                     text="Generate Tests"/>
         </group>
 
-        <group id="EditorActionGroup" class="org.vorpal.research.kex.plugin.actions.EditorActionGroup"
+        <group id="EditorActionGroup" class="org.vorpal.research.kex.plugin.actions.editor.EditorActionGroup"
                popup="true"
                icon="/icons/kex16.svg" text="Kex">
             <add-to-group group-id="EditorLangPopupMenu" anchor="after" relative-to-action="Generate"/>
-            <action id="Kex.Actions.EditorAction" class="org.vorpal.research.kex.plugin.actions.EditorAction"
+            <action id="Kex.Actions.EditorAction" class="org.vorpal.research.kex.plugin.actions.editor.EditorAction"
                     text="Generate Tests"/>
             <action id="Kex.Actions.EditorMethodGraphAction"
-                    class="org.vorpal.research.kex.plugin.actions.EditorMethodGraphAction"
+                    class="org.vorpal.research.kex.plugin.actions.editor.EditorMethodGraphAction"
                     text="Graph"/>
         </group>
     </actions>

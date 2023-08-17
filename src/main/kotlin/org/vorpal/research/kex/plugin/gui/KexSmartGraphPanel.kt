@@ -28,7 +28,7 @@ class KexSmartGraphPanel<V, E>(
         vertexContextMenuPredicate = predicate
     }
 
-    fun addContextMenuItem(itemName: String, consumer: Consumer<SmartGraphVertex<V>>) {
+    fun addVertexContextMenuItem(itemName: String, consumer: Consumer<SmartGraphVertex<V>>) {
         val menuItem = MenuItem(itemName)
         vertexContextMenu.items.add(menuItem)
         vertexMenuItemConsumers[menuItem] = consumer

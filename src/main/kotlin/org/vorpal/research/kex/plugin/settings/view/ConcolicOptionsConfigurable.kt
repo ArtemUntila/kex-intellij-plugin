@@ -1,11 +1,8 @@
 package org.vorpal.research.kex.plugin.settings.view
 
-import com.intellij.codeInspection.javaDoc.JavadocUIUtil.bindItem
 import com.intellij.openapi.options.BoundConfigurable
 import com.intellij.openapi.ui.DialogPanel
-import com.intellij.ui.dsl.builder.RightGap
-import com.intellij.ui.dsl.builder.bindIntText
-import com.intellij.ui.dsl.builder.panel
+import com.intellij.ui.dsl.builder.*
 import org.vorpal.research.kex.plugin.settings.state.ConcolicOptionsStateComponent
 
 class ConcolicOptionsConfigurable : BoundConfigurable("Concolic") {
@@ -24,7 +21,7 @@ class ConcolicOptionsConfigurable : BoundConfigurable("Concolic") {
                 intTextField(IntRange(1, 32)).bindIntText(state::numberOfExecutors)
             }
             row("Search strategy:") {
-                comboBox(listOf("bfs", "cgs")).bindItem(state::searchStrategy)
+                comboBox(listOf("bfs", "cgs")).bindItem(state::searchStrategy.toNullableProperty())
             }
         }
     }

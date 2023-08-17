@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "org.vorpal.research"
-version = "0.0.1"
+version = "0.0.2"
 
 repositories {
     mavenCentral()
@@ -19,7 +19,7 @@ repositories {
 
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
 intellij {
-    version.set("2023.1")
+    version.set("2023.2")
     type.set("IC") // Target IDE Platform
 
     plugins.set(listOf("com.intellij.java", "org.jetbrains.kotlin"))
@@ -37,7 +37,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("223")
-        untilBuild.set("231.*")
+        untilBuild.set("232.*")
     }
 
     signPlugin {
